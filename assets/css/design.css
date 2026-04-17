@@ -1,0 +1,2274 @@
+/* =============================================================================
+   IMADETHEARK — design.css  v2.1
+   White-dominant palette: Cream base · Gold/Orange anchors · Black/Blue contrast
+   White is the canvas — gold, black, blue punch through it.
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 1 — DESIGN TOKENS
+   ───────────────────────────────────────────────────────────────────────────── */
+:root {
+    /* ── Raw colours ─────────────────────────────────────────────────────────── */
+    --ark-black:        #080808;
+    --ark-black-soft:   #111111;
+    --ark-black-mid:    #1C1C1C;
+    --ark-black-light:  #2E2E2E;
+
+    --ark-white:        #FFFFFF;
+    --ark-white-warm:   #FAF8F3;   /* page background — warm cream */
+    --ark-white-soft:   #F2EEE6;   /* section alt bg */
+    --ark-white-muted:  #7A7268;   /* body text muted */
+    --ark-white-deep:   #3A342C;   /* darker readable text on white */
+
+    --ark-gold:         #C9A84C;
+    --ark-gold-light:   #E8C96A;
+    --ark-gold-dark:    #9E7E2A;
+    --ark-gold-shine:   #F5D98A;
+    --ark-orange:       #D4762A;
+    --ark-orange-light: #F0933A;
+
+    --ark-blue:         #0A1A3A;   /* kept for black-contrast sections */
+    --ark-blue-mid:     #1A3A6B;
+    --ark-blue-bright:  #2463EB;
+    --ark-blue-royal:   #1A4BD4;   /* vibrant cobalt — ARK Blue Collection */
+    --ark-blue-light:   #4A90D9;
+    --ark-blue-pale:    #D8E6F5;
+
+    /* ── Semantic aliases — light mode ───────────────────────────────────────── */
+    --ark-bg:           var(--ark-white-warm);   /* warm cream canvas */
+    --ark-bg-card:      var(--ark-white);        /* pure white cards */
+    --ark-bg-elevated:  var(--ark-white-soft);   /* slightly deeper white */
+    --ark-text:         var(--ark-black);        /* near-black on white */
+    --ark-text-muted:   var(--ark-white-muted);  /* warm grey */
+    --ark-accent:       var(--ark-gold);
+    --ark-accent-hover: var(--ark-gold-light);
+    --ark-border:       rgba(10, 10, 10, 0.09);       /* soft black line */
+    --ark-border-gold:  rgba(201, 168, 76, 0.30);     /* gold line */
+    --ark-border-hover: rgba(201, 168, 76, 0.55);
+
+    /* Typography */
+    --ark-font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+    --ark-font-serif:   'Cormorant Garamond', 'Georgia', serif;
+    --ark-font-body:    'DM Sans', system-ui, sans-serif;
+
+    --ark-size-xs:   clamp(0.75rem,  1.5vw, 0.875rem);
+    --ark-size-sm:   clamp(0.875rem, 1.8vw, 1rem);
+    --ark-size-base: clamp(1rem,     2vw,   1.125rem);
+    --ark-size-lg:   clamp(1.125rem, 2.5vw, 1.375rem);
+    --ark-size-xl:   clamp(1.375rem, 3vw,   1.75rem);
+    --ark-size-2xl:  clamp(1.75rem,  4vw,   2.5rem);
+    --ark-size-3xl:  clamp(2.5rem,   6vw,   4rem);
+    --ark-size-4xl:  clamp(3.5rem,   9vw,   7rem);
+    --ark-size-hero: clamp(4rem,     12vw,  11rem);
+
+    /* Spacing */
+    --ark-space-xs:  0.5rem;
+    --ark-space-sm:  1rem;
+    --ark-space-md:  1.5rem;
+    --ark-space-lg:  2.5rem;
+    --ark-space-xl:  4rem;
+    --ark-space-2xl: 7rem;
+    --ark-space-3xl: 12rem;
+
+    /* Motion */
+    --ark-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ark-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    --ark-ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+    --ark-ease-inout:  cubic-bezier(0.37, 0, 0.63, 1);
+    --ark-dur-fast:    0.22s;
+    --ark-dur-mid:     0.45s;
+    --ark-dur-slow:    0.85s;
+
+    /* Borders & Radius */
+    --ark-radius-sm:   4px;
+    --ark-radius-md:   8px;
+    --ark-radius-lg:   16px;
+    --ark-radius-xl:   24px;
+    --ark-radius-pill: 999px;
+
+    /* Shadows */
+    --ark-shadow-sm:   0 2px 8px rgba(0,0,0,0.35);
+    --ark-shadow-md:   0 8px 32px rgba(0,0,0,0.5);
+    --ark-shadow-lg:   0 24px 64px rgba(0,0,0,0.65);
+    --ark-shadow-gold: 0 8px 32px rgba(201,168,76,0.22);
+    --ark-shadow-blue: 0 8px 32px rgba(36,99,235,0.25);
+
+    /* Z-index layers */
+    --z-base:    1;
+    --z-card:    10;
+    --z-sticky:  100;
+    --z-overlay: 200;
+    --z-modal:   300;
+    --z-cursor:  9000;
+    --z-loader:  9999;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 2 — GLOBAL RESET + BASE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    cursor: none; /* Hidden — replaced by custom cursor */
+}
+
+body {
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-base);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ark-text);
+    background-color: var(--ark-bg);
+    overflow-x: hidden;
+}
+
+/* Prevent layout shift during page load */
+.ark-loading body {
+    overflow: hidden;
+}
+
+img, video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    cursor: none;
+}
+
+button, input, select, textarea {
+    font: inherit;
+    cursor: none;
+}
+
+ul, ol { list-style: none; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ark-white-soft); }
+::-webkit-scrollbar-thumb {
+    background: var(--ark-gold);
+    border-radius: var(--ark-radius-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--ark-gold-dark); }
+
+/* ── Selection ── */
+::selection {
+    background: var(--ark-gold);
+    color: var(--ark-black);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 3 — NOISE TEXTURE OVERLAY
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-noise {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-overlay);
+    pointer-events: none;
+    opacity: 0.028;
+    /* Static grain — no animation = zero repaint cost */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    /* NO animation — was the single biggest paint offender */
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 4 — CUSTOM CURSOR
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-cursor);
+    pointer-events: none;
+    /* no mix-blend-mode on white — exclusion inverts to dark, looks bad on cream */
+    will-change: transform;
+}
+
+.ark-cursor__dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ark-black);   /* dark dot on white bg */
+    transform: translate(-50%, -50%);
+    transition: width 0.25s var(--ark-ease-spring),
+                height 0.25s var(--ark-ease-spring),
+                background 0.2s var(--ark-ease-out);
+}
+
+.ark-cursor__ring {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--ark-gold);   /* gold ring, visible on cream */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.65;
+    transition: width 0.32s var(--ark-ease-spring),
+                height 0.32s var(--ark-ease-spring),
+                opacity 0.3s var(--ark-ease-out),
+                background 0.25s var(--ark-ease-out),
+                border-color 0.2s var(--ark-ease-out);
+}
+
+.ark-cursor__label {
+    position: absolute;
+    top: -2.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--ark-font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ark-gold-dark);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s var(--ark-ease-out);
+}
+
+/* Hover states managed by JS adding classes to .ark-cursor */
+.ark-cursor.is-hovering .ark-cursor__ring {
+    width: 52px;
+    height: 52px;
+    opacity: 1;
+    background: rgba(201, 168, 76, 0.10);
+}
+
+.ark-cursor.is-hovering .ark-cursor__dot {
+    width: 10px;
+    height: 10px;
+}
+
+.ark-cursor.is-link .ark-cursor__ring {
+    width: 48px;
+    height: 48px;
+    background: rgba(201, 168, 76, 0.12);
+    border-color: var(--ark-gold-light);
+}
+
+.ark-cursor.is-drag .ark-cursor__ring {
+    width: 72px;
+    height: 72px;
+    border-style: dashed;
+}
+
+.ark-cursor.is-drag .ark-cursor__label { opacity: 1; }
+
+.ark-cursor.is-drag .ark-cursor__label::before { content: 'DRAG'; }
+
+.ark-cursor.is-clicking .ark-cursor__dot {
+    transform: translate(-50%, -50%) scale(0.6);
+}
+.ark-cursor.is-clicking .ark-cursor__ring {
+    transform: translate(-50%, -50%) scale(0.75);
+    border-color: var(--ark-gold);
+    background: rgba(201, 168, 76, 0.08);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 5 — LOADING SCREEN
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-loader {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-loader);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Show only while <html> has .ark-loading */
+.ark-loading .ark-loader {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.ark-loader__bg {
+    position: absolute;
+    inset: 0;
+    background: var(--ark-black);
+}
+
+.ark-loader__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ark-space-lg);
+}
+
+.ark-loader__logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2em;
+    overflow: hidden;
+}
+
+.ark-loader__word {
+    display: block;
+    font-family: var(--ark-font-display);
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 0.06em;
+    color: var(--ark-white);
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.ark-loader__word:last-child {
+    /* "ARK" in gold */
+    background: linear-gradient(135deg, var(--ark-gold) 0%, var(--ark-gold-shine) 50%, var(--ark-gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ark-loader__bar {
+    width: clamp(180px, 30vw, 360px);
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    overflow: hidden;
+}
+
+.ark-loader__bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--ark-gold-dark), var(--ark-gold), var(--ark-gold-shine));
+    transition: width 0.04s linear;
+}
+
+.ark-loader__count {
+    font-family: var(--ark-font-display);
+    font-size: clamp(1rem, 3vw, 1.75rem);
+    letter-spacing: 0.2em;
+    color: var(--ark-gold);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 6 — NAVIGATION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Target the theme's header/nav element */
+.site-header,
+header.header,
+#masthead,
+.main-navigation-wrapper,
+header[class*="header"] {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    padding: var(--ark-space-md) var(--ark-space-xl);
+    transition: padding var(--ark-dur-mid) var(--ark-ease-out),
+                background var(--ark-dur-mid) var(--ark-ease-out),
+                backdrop-filter var(--ark-dur-mid) var(--ark-ease-out),
+                transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow var(--ark-dur-mid) var(--ark-ease-out);
+}
+
+/* Scrolled state — added by JS */
+.site-header.ark-nav-scrolled,
+header.header.ark-nav-scrolled,
+#masthead.ark-nav-scrolled {
+    padding: var(--ark-space-sm) var(--ark-space-xl);
+    background: rgba(250, 248, 243, 0.92) !important;  /* cream/white glass */
+    backdrop-filter: blur(18px) saturate(1.4);
+    border-bottom: 1px solid var(--ark-border);
+    box-shadow: 0 1px 24px rgba(0,0,0,0.06);
+}
+
+/* Hidden on scroll-down, shown on scroll-up — managed by JS */
+.site-header.ark-nav-hidden,
+header.header.ark-nav-hidden,
+#masthead.ark-nav-hidden {
+    transform: translateY(-100%);
+}
+
+/* Nav links — dark text on white nav */
+.site-header a,
+#masthead a,
+.main-navigation a {
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ark-black);
+    position: relative;
+    transition: color var(--ark-dur-fast) var(--ark-ease-out);
+}
+
+/* Animated underline on nav links */
+.main-navigation a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--ark-gold);
+    transition: width var(--ark-dur-mid) var(--ark-ease-spring);
+}
+
+.main-navigation a:hover::after,
+.main-navigation .current-menu-item > a::after {
+    width: 100%;
+}
+
+.main-navigation a:hover {
+    color: var(--ark-gold);
+}
+
+/* Site logo */
+.site-logo img,
+.custom-logo,
+.site-branding img {
+    height: 44px;
+    width: auto;
+    transition: filter var(--ark-dur-mid) var(--ark-ease-out),
+                transform var(--ark-dur-mid) var(--ark-ease-spring);
+}
+
+.site-logo:hover img,
+.site-branding a:hover img {
+    filter: brightness(1.1);
+    transform: scale(1.03);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 7 — HERO SECTION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.home-hero,
+.hero-section,
+.ark-hero,
+section[class*="hero"],
+.elementor-section:first-of-type,
+.page-header {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* White hero — editorial, Bottega-level restraint */
+    background: var(--ark-white-warm);
+}
+
+/* Hero background image — parallax layer handled by JS */
+.ark-hero__bg,
+.hero-bg,
+.hero-section .wp-post-image {
+    position: absolute;
+    inset: -12%;
+    width: 116%;
+    height: 116%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.88) saturate(0.55) contrast(1.05);
+    will-change: transform;
+    opacity: 0.18;   /* very subtle on white — texture, not dominance */
+    transition: filter var(--ark-dur-slow) var(--ark-ease-out);
+}
+
+/* Soft warm vignette at bottom — fades image into cream */
+.ark-hero::after,
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(
+        to top,
+        var(--ark-white-warm) 0%,
+        rgba(250,248,243,0.6) 40%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Hero content wrapper */
+.ark-hero__content,
+.hero-content,
+.hero-section .entry-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: var(--ark-space-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Eyebrow label above hero title */
+.ark-hero__eyebrow {
+    display: inline-block;
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ark-gold-dark);  /* darker gold — readable on cream */
+    margin-bottom: var(--ark-space-md);
+    opacity: 0;
+}
+
+/* Hero headline — black on white */
+.ark-hero__title,
+.hero-section h1,
+.home-hero h1 {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-size-hero);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--ark-black);
+    text-transform: uppercase;
+    margin-bottom: var(--ark-space-lg);
+    overflow: hidden;
+}
+
+/* Gold word — shimmer animation */
+.ark-hero__title .ark-gold,
+.ark-gold-text {
+    background: linear-gradient(135deg, var(--ark-gold-dark) 0%, var(--ark-gold) 40%, var(--ark-gold-shine) 70%, var(--ark-gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* GPU-composited breathe — filter runs on compositor, no repaint */
+    animation: ark-gold-breathe 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes ark-gold-breathe {
+    from { filter: brightness(0.88) saturate(0.85); }
+    to   { filter: brightness(1.22) saturate(1.15); }
+}
+
+/* Hero subtitle */
+.ark-hero__sub,
+.hero-section .tagline,
+.home-hero p {
+    font-family: var(--ark-font-serif);
+    font-size: var(--ark-size-xl);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ark-white-muted);
+    max-width: 600px;
+    margin: 0 auto var(--ark-space-xl);
+    line-height: 1.5;
+}
+
+/* Hero scroll indicator */
+/* ── Gooey Text Morph ───────────────────────────────────────────────────── */
+.ark-gooey-wrap {
+    position: relative;
+    height: clamp(3rem, 6vw, 4.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--ark-space-lg);
+    overflow: visible;
+}
+
+.ark-gooey-svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.ark-gooey-filter {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.ark-gooey-text {
+    position: absolute;
+    font-family: var(--ark-font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ark-gold);
+    text-align: center;
+    user-select: none;
+    white-space: nowrap;
+    line-height: 1;
+    /* GPU layer — filter animations run compositor-side */
+    will-change: filter, opacity;
+}
+
+/* ── Scroll indicator ──────────────────────────────────────────────────── */
+.ark-scroll-indicator {
+    position: absolute;
+    bottom: var(--ark-space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ark-space-xs);
+    opacity: 0; /* JS animates in */
+}
+
+.ark-scroll-indicator__line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--ark-gold), transparent);
+    animation: ark-scroll-line 1.8s ease-in-out infinite;
+}
+
+.ark-scroll-indicator__text {
+    font-family: var(--ark-font-body);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ark-gold);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+}
+
+@keyframes ark-scroll-line {
+    0%, 100% { transform: scaleY(1); opacity: 0.6; }
+    50%       { transform: scaleY(0.5); opacity: 1; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 8 — STATS / NUMBERS BAR
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-stats,
+.stats-bar,
+section[class*="stats"],
+section[class*="numbers"] {
+    /* Black contrast block — punches against the white sections */
+    background: var(--ark-black);
+    border-top: none;
+    border-bottom: none;
+    padding: var(--ark-space-xl) var(--ark-space-xl);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Blue section accent line */
+.ark-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ark-gold), transparent);
+}
+
+.ark-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--ark-space-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ark-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ark-space-xs);
+    padding: var(--ark-space-md);
+}
+
+.ark-stat__number {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-size-3xl);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, var(--ark-gold), var(--ark-gold-shine));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ark-stat__label {
+    font-size: var(--ark-size-xs);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ark-white-muted);
+}
+
+.ark-stat__divider {
+    width: 32px;
+    height: 1px;
+    background: var(--ark-gold);
+    margin: var(--ark-space-xs) auto 0;
+    opacity: 0.5;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 9 — MARQUEE TICKER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-marquee-section {
+    padding: var(--ark-space-md) 0;
+    background: var(--ark-gold);
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    z-index: var(--z-base);
+    border-top: 1px solid var(--ark-gold-dark);
+    border-bottom: 1px solid var(--ark-gold-dark);
+}
+
+.ark-marquee-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    animation: ark-marquee-scroll 28s linear infinite;
+    will-change: transform;
+}
+
+/* JS can pause on hover via .ark-marquee-paused */
+.ark-marquee-track.ark-marquee-paused {
+    animation-play-state: paused;
+}
+
+.ark-marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ark-space-md);
+    font-family: var(--ark-font-display);
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ark-black);
+    padding: 0 var(--ark-space-md);
+}
+
+.ark-marquee-sep {
+    width: 6px;
+    height: 6px;
+    color: var(--ark-black);
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+
+@keyframes ark-marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 10 — SECTION BASE / CONTENT SECTIONS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-section,
+section {
+    padding: var(--ark-space-3xl) var(--ark-space-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.ark-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Section heading group */
+.ark-section-head {
+    margin-bottom: var(--ark-space-2xl);
+}
+
+.ark-section-head--center {
+    text-align: center;
+}
+
+.ark-eyebrow {
+    display: inline-block;
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ark-gold);
+    margin-bottom: var(--ark-space-sm);
+    position: relative;
+}
+
+/* Horizontal rule before eyebrow */
+.ark-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--ark-gold);
+    vertical-align: middle;
+    margin-right: var(--ark-space-sm);
+}
+
+.ark-heading {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-size-4xl);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ark-black);   /* black on white */
+    margin-bottom: var(--ark-space-md);
+    overflow: hidden;
+}
+
+/* Outlined heading variant — dark outline on white */
+.ark-heading--outline {
+    -webkit-text-stroke: 1.5px rgba(10,10,10,0.25);
+    color: transparent;
+}
+
+.ark-heading--gold {
+    background: linear-gradient(135deg, var(--ark-gold-dark) 0%, var(--ark-gold) 50%, var(--ark-gold-shine) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ark-subhead {
+    font-family: var(--ark-font-serif);
+    font-size: var(--ark-size-lg);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ark-white-muted);
+    max-width: 560px;
+    line-height: 1.55;
+}
+
+/* Section with black bg — contrast anchor */
+.ark-section--blue,
+.ark-section--dark {
+    background: var(--ark-black);
+}
+
+/* Section with slight elevation — light cream */
+.ark-section--elevated {
+    background: var(--ark-white-soft);
+}
+
+/* Decorative border line */
+.ark-section--bordered::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--ark-space-xl);
+    right: var(--ark-space-xl);
+    height: 1px;
+    background: var(--ark-border);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 11 — BUTTONS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Base button */
+.ark-btn,
+.button,
+button[class*="button"],
+input[type="submit"],
+.woocommerce button.button,
+.woocommerce a.button,
+.woocommerce input.button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ark-space-sm);
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2.2rem;
+    border-radius: var(--ark-radius-sm);
+    border: 1px solid transparent;
+    overflow: hidden;
+    transition: transform var(--ark-dur-fast) var(--ark-ease-spring),
+                box-shadow var(--ark-dur-mid) var(--ark-ease-out),
+                color var(--ark-dur-fast) var(--ark-ease-out);
+    /* no persistent will-change on buttons — GPU layer only needed during hover */
+    cursor: none;
+    white-space: nowrap;
+    z-index: 0;
+}
+
+/* Magnetic wrapper div added by JS around .ark-btn elements */
+.ark-btn-magnetic {
+    display: inline-block;
+    position: relative;
+}
+
+/* Gold primary button */
+.ark-btn--primary,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.single_add_to_cart_button {
+    background: linear-gradient(135deg, var(--ark-gold-dark) 0%, var(--ark-gold) 60%, var(--ark-gold-light) 100%);
+    color: var(--ark-black) !important;
+    border-color: var(--ark-gold);
+    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.28);
+}
+
+.ark-btn--primary::before,
+.woocommerce a.button.alt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--ark-gold-light), var(--ark-gold-shine));
+    opacity: 0;
+    transition: opacity var(--ark-dur-fast) var(--ark-ease-out);
+    z-index: -1;
+}
+
+.ark-btn--primary:hover::before,
+.woocommerce a.button.alt:hover::before {
+    opacity: 1;
+}
+
+.ark-btn--primary:hover {
+    box-shadow: var(--ark-shadow-gold), 0 0 40px rgba(201,168,76,0.2);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.ark-btn--primary:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 8px rgba(201,168,76,0.2);
+}
+
+/* Outline ghost button — dark border on white bg */
+.ark-btn--outline {
+    background: transparent;
+    color: var(--ark-black) !important;
+    border-color: rgba(10, 10, 10, 0.28);
+}
+
+.ark-btn--outline:hover {
+    border-color: var(--ark-gold);
+    color: var(--ark-gold-dark) !important;
+    background: rgba(201, 168, 76, 0.06);
+    box-shadow: 0 0 20px rgba(201,168,76,0.10);
+}
+
+/* Dark variant — white outline on black sections */
+.ark-btn--outline-white {
+    background: transparent;
+    color: var(--ark-white) !important;
+    border-color: rgba(255,255,255,0.30);
+}
+
+.ark-btn--outline-white:hover {
+    border-color: var(--ark-gold);
+    color: var(--ark-gold) !important;
+}
+
+/* Blue accent button */
+.ark-btn--blue {
+    background: var(--ark-blue-bright);
+    color: var(--ark-white) !important;
+    border-color: var(--ark-blue-bright);
+    box-shadow: var(--ark-shadow-blue);
+}
+
+.ark-btn--blue:hover {
+    background: var(--ark-blue-light);
+    box-shadow: 0 8px 32px rgba(36,99,235,0.4);
+    transform: translateY(-2px);
+}
+
+/* Button ripple effect — created by JS on click */
+.ark-btn .ark-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(0);
+    animation: ark-ripple-expand 0.6s var(--ark-ease-out) forwards;
+    pointer-events: none;
+}
+
+@keyframes ark-ripple-expand {
+    to { transform: scale(4); opacity: 0; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 12 — PRODUCT CARDS (WooCommerce)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Product grid */
+.woocommerce ul.products,
+.products.columns-3,
+.products.columns-4 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: var(--ark-space-md) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+/* Single product card */
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product {
+    position: relative;
+    background: var(--ark-black-soft) !important;
+    border: 1px solid var(--ark-border) !important;
+    border-radius: var(--ark-radius-lg) !important;
+    overflow: hidden !important;
+    contain: layout style;    /* limits reflow scope to this card */
+    /* JS drives --tilt-x / --tilt-y; CSS hover drives --ark-lift */
+    transform: perspective(800px)
+               rotateX(var(--tilt-x, 0deg))
+               rotateY(var(--tilt-y, 0deg))
+               translateY(var(--ark-lift, 0px)) !important;
+    transition: border-color var(--ark-dur-mid) var(--ark-ease-out),
+                box-shadow var(--ark-dur-mid) var(--ark-ease-out),
+                transform var(--ark-dur-mid) var(--ark-ease-spring) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.woocommerce ul.products li.product:hover {
+    --ark-lift: -6px;
+    border-color: var(--ark-border-hover) !important;
+    box-shadow: var(--ark-shadow-gold) !important;
+}
+
+/* Product image container */
+.woocommerce ul.products li.product a.woocommerce-loop-product__link,
+.woocommerce ul.products li.product > a:first-child {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    border-radius: var(--ark-radius-lg) var(--ark-radius-lg) 0 0;
+}
+
+/* Primary image */
+.woocommerce ul.products li.product img.wp-post-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    transition: transform 0.8s var(--ark-ease-out),
+                filter 0.6s var(--ark-ease-out) !important;
+    transform-origin: center center;
+}
+
+.woocommerce ul.products li.product:hover img.wp-post-image {
+    transform: scale(1.06) !important;
+    filter: brightness(0.9) !important;
+}
+
+/* Hover image (injected by PHP) */
+.ark-img-hover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0;
+    transition: opacity 0.55s var(--ark-ease-out);
+    pointer-events: none;
+}
+
+.woocommerce ul.products li.product:hover .ark-img-hover {
+    opacity: 1;
+}
+
+/* Product info */
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.woocommerce ul.products li.product h2 {
+    font-family: var(--ark-font-body) !important;
+    font-size: var(--ark-size-sm) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--ark-black) !important;   /* dark text on white card */
+    padding: var(--ark-space-md) var(--ark-space-md) var(--ark-space-xs) !important;
+    margin: 0 !important;
+    transition: color var(--ark-dur-fast) var(--ark-ease-out);
+}
+
+.woocommerce ul.products li.product:hover .woocommerce-loop-product__title {
+    color: var(--ark-gold) !important;
+}
+
+/* Price */
+.woocommerce ul.products li.product .price {
+    font-family: var(--ark-font-body) !important;
+    font-size: var(--ark-size-sm) !important;
+    font-weight: 600 !important;
+    color: var(--ark-gold) !important;
+    padding: 0 var(--ark-space-md) var(--ark-space-md) !important;
+    display: block;
+}
+
+.woocommerce ul.products li.product .price del {
+    color: var(--ark-text-muted) !important;
+    font-weight: 400 !important;
+    font-size: 0.85em !important;
+}
+
+/* Add to cart button on card */
+.woocommerce ul.products li.product .button {
+    display: block !important;
+    width: calc(100% - calc(var(--ark-space-md) * 2)) !important;
+    margin: 0 var(--ark-space-md) var(--ark-space-md) !important;
+    text-align: center !important;
+    background: transparent !important;
+    border: 1px solid var(--ark-border) !important;
+    color: var(--ark-white) !important;
+    font-size: var(--ark-size-xs) !important;
+    letter-spacing: 0.15em !important;
+    padding: 0.75rem !important;
+    border-radius: var(--ark-radius-sm) !important;
+    transition: background var(--ark-dur-fast) var(--ark-ease-out),
+                border-color var(--ark-dur-fast) var(--ark-ease-out),
+                color var(--ark-dur-fast) var(--ark-ease-out) !important;
+}
+
+.woocommerce ul.products li.product .button:hover {
+    background: var(--ark-gold) !important;
+    border-color: var(--ark-gold) !important;
+    color: var(--ark-black) !important;
+}
+
+/* Sale badge */
+.woocommerce span.onsale {
+    position: absolute !important;
+    top: var(--ark-space-sm) !important;
+    right: var(--ark-space-sm) !important;
+    left: auto !important;
+    background: var(--ark-gold) !important;
+    color: var(--ark-black) !important;
+    font-family: var(--ark-font-body) !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    border-radius: var(--ark-radius-sm) !important;
+    padding: 0.3em 0.7em !important;
+    z-index: 2 !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    line-height: 1.4 !important;
+    box-shadow: 0 2px 8px rgba(201,168,76,0.35) !important;
+}
+
+/* Star ratings */
+.woocommerce .star-rating {
+    color: var(--ark-gold) !important;
+}
+
+.woocommerce .star-rating::before,
+.woocommerce .star-rating span::before {
+    color: var(--ark-gold) !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 13 — FEATURES / PROCESS CARDS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--ark-space-md);
+}
+
+.ark-feature-card {
+    position: relative;
+    padding: var(--ark-space-xl) var(--ark-space-lg);
+    background: var(--ark-black-soft);
+    border: 1px solid var(--ark-border);
+    border-radius: var(--ark-radius-lg);
+    overflow: hidden;
+    contain: layout style;    /* scopes reflow to card */
+    /* JS drives --tilt-x / --tilt-y; CSS hover drives --ark-lift */
+    transform: perspective(800px)
+               rotateX(var(--tilt-x, 0deg))
+               rotateY(var(--tilt-y, 0deg))
+               translateY(var(--ark-lift, 0px));
+    transition: border-color var(--ark-dur-mid) var(--ark-ease-out),
+                transform var(--ark-dur-mid) var(--ark-ease-spring);
+    cursor: none;
+}
+
+.ark-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ark-gold), transparent);
+    opacity: 0;
+    transition: opacity var(--ark-dur-mid) var(--ark-ease-out);
+}
+
+.ark-feature-card:hover {
+    --ark-lift: -4px;
+    border-color: var(--ark-border-hover);
+}
+
+.ark-feature-card:hover::before {
+    opacity: 1;
+}
+
+/* Spotlight glow — tracked by JS cursor position */
+.ark-feature-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(201, 168, 76, 0.06),
+        transparent 70%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--ark-dur-mid) var(--ark-ease-out);
+}
+
+.ark-feature-card:hover::after { opacity: 1; }
+
+.ark-feature-card__number {
+    font-family: var(--ark-font-display);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--ark-border);
+    margin-bottom: var(--ark-space-md);
+    transition: color var(--ark-dur-mid) var(--ark-ease-out);
+}
+
+.ark-feature-card:hover .ark-feature-card__number {
+    color: var(--ark-gold-dark);
+}
+
+.ark-feature-card__icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--ark-border);
+    border-radius: var(--ark-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--ark-space-md);
+    color: var(--ark-gold);
+    transition: border-color var(--ark-dur-mid) var(--ark-ease-out),
+                background var(--ark-dur-mid) var(--ark-ease-out);
+}
+
+.ark-feature-card:hover .ark-feature-card__icon {
+    border-color: var(--ark-gold);
+    background: rgba(201, 168, 76, 0.08);
+}
+
+.ark-feature-card__title {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-size-xl);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ark-black);   /* dark on white card */
+    margin-bottom: var(--ark-space-sm);
+}
+
+.ark-feature-card__text {
+    font-size: var(--ark-size-sm);
+    line-height: 1.65;
+    color: var(--ark-white-muted);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 14 — TWO-COLUMN SPLIT (About / Bento)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ark-space-2xl);
+    align-items: center;
+}
+
+.ark-split--reverse { direction: rtl; }
+.ark-split--reverse > * { direction: ltr; }
+
+.ark-split__visual {
+    position: relative;
+    border-radius: var(--ark-radius-xl);
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    border: 1px solid var(--ark-border);
+}
+
+.ark-split__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ark-ease-out);
+}
+
+.ark-split__visual:hover img {
+    transform: scale(1.04);
+}
+
+/* Gold corner accent */
+.ark-split__visual::before {
+    content: '';
+    position: absolute;
+    bottom: var(--ark-space-md);
+    right: var(--ark-space-md);
+    width: 48px;
+    height: 48px;
+    border-right: 2px solid var(--ark-gold);
+    border-bottom: 2px solid var(--ark-gold);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ark-split__visual::after {
+    content: '';
+    position: absolute;
+    top: var(--ark-space-md);
+    left: var(--ark-space-md);
+    width: 48px;
+    height: 48px;
+    border-left: 2px solid var(--ark-gold);
+    border-top: 2px solid var(--ark-gold);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ark-split__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ark-space-lg);
+}
+
+.ark-split__body p {
+    font-size: var(--ark-size-base);
+    line-height: 1.75;
+    color: var(--ark-white-muted);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 15 — PROCESS TIMELINE (horizontal scroll panel)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-timeline {
+    display: flex;
+    gap: var(--ark-space-xl);
+    padding: var(--ark-space-xl) 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    cursor: grab;
+}
+
+.ark-timeline:active { cursor: grabbing; }
+.ark-timeline::-webkit-scrollbar { display: none; }
+
+.ark-timeline-step {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    position: relative;
+    padding-top: var(--ark-space-2xl);
+}
+
+/* Step connector line */
+.ark-timeline-step::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--ark-space-lg) + 10px);
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--ark-gold) 0%, var(--ark-border) 100%);
+}
+
+.ark-timeline-step:last-child::before {
+    width: 50%;
+}
+
+/* Step dot */
+.ark-timeline-step::after {
+    content: '';
+    position: absolute;
+    top: var(--ark-space-lg);
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--ark-gold);
+    box-shadow: 0 0 16px rgba(201,168,76,0.5);
+    transform: translateY(-50%);
+}
+
+.ark-timeline-step__num {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-size-3xl);
+    color: var(--ark-border);
+    line-height: 1;
+    margin-bottom: var(--ark-space-sm);
+}
+
+.ark-timeline-step__title {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-size-xl);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ark-white);
+    margin-bottom: var(--ark-space-sm);
+}
+
+.ark-timeline-step__desc {
+    font-size: var(--ark-size-sm);
+    line-height: 1.65;
+    color: var(--ark-white-muted);
+    padding-right: var(--ark-space-lg);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 16 — TESTIMONIALS / QUOTE CARD
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-testimonial {
+    position: relative;
+    padding: var(--ark-space-2xl) var(--ark-space-xl);
+    background: var(--ark-white);
+    border: 1px solid var(--ark-border);
+    border-radius: var(--ark-radius-xl);
+    text-align: center;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.05);
+}
+
+.ark-testimonial::before {
+    content: '\201C';
+    position: absolute;
+    top: var(--ark-space-lg);
+    left: var(--ark-space-xl);
+    font-family: var(--ark-font-serif);
+    font-size: 8rem;
+    line-height: 0.7;
+    color: var(--ark-gold);
+    opacity: 0.22;
+}
+
+.ark-testimonial__quote {
+    font-family: var(--ark-font-serif);
+    font-size: var(--ark-size-xl);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--ark-black);   /* dark quote on white */
+    margin-bottom: var(--ark-space-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.ark-testimonial__author {
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ark-gold-dark);
+}
+
+.ark-testimonial__company {
+    font-size: var(--ark-size-xs);
+    color: var(--ark-white-muted);
+    margin-top: var(--ark-space-xs);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 17 — TAG / BADGE CHIPS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35em 0.85em;
+    border-radius: var(--ark-radius-pill);
+    border: 1px solid;
+    white-space: nowrap;
+}
+
+.ark-chip--gold {
+    color: var(--ark-gold);
+    border-color: rgba(201,168,76,0.3);
+    background: rgba(201,168,76,0.08);
+}
+
+.ark-chip--blue {
+    color: var(--ark-blue-light);
+    border-color: rgba(74,144,217,0.3);
+    background: rgba(74,144,217,0.08);
+}
+
+.ark-chip--white {
+    color: var(--ark-white-muted);
+    border-color: rgba(255,255,255,0.2);
+    background: transparent;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 18 — HORIZONTAL DIVIDER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--ark-border);
+    margin: var(--ark-space-xl) 0;
+}
+
+.ark-divider--gold {
+    background: linear-gradient(90deg, transparent 0%, var(--ark-gold) 30%, var(--ark-gold) 70%, transparent 100%);
+    opacity: 0.35;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 19 — WOOCOMMERCE SINGLE PRODUCT PAGE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.woocommerce div.product {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: var(--ark-space-2xl) !important;
+    align-items: start !important;
+    padding: var(--ark-space-2xl) var(--ark-space-xl) !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
+
+.woocommerce div.product div.images {
+    position: sticky;
+    top: calc(var(--ark-space-2xl) + 80px);
+    border-radius: var(--ark-radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--ark-border);
+}
+
+.woocommerce div.product div.images img {
+    border-radius: var(--ark-radius-xl);
+}
+
+.woocommerce div.product div.summary {
+    padding-top: var(--ark-space-sm);
+}
+
+.woocommerce div.product h1.product_title {
+    font-family: var(--ark-font-display) !important;
+    font-size: var(--ark-size-3xl) !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    color: var(--ark-white) !important;
+    line-height: 0.95 !important;
+    margin-bottom: var(--ark-space-md) !important;
+}
+
+.woocommerce div.product p.price {
+    font-size: var(--ark-size-2xl) !important;
+    color: var(--ark-gold) !important;
+    font-weight: 600 !important;
+    margin-bottom: var(--ark-space-lg) !important;
+}
+
+.woocommerce div.product .single_add_to_cart_button {
+    width: 100% !important;
+    padding: 1.1rem !important;
+    font-size: var(--ark-size-sm) !important;
+    letter-spacing: 0.18em !important;
+    border-radius: var(--ark-radius-sm) !important;
+}
+
+/* Tabs on product page */
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+    background: transparent !important;
+    border: none !important;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+    font-family: var(--ark-font-body) !important;
+    font-size: var(--ark-size-xs) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--ark-white-muted) !important;
+    transition: color var(--ark-dur-fast) var(--ark-ease-out);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+    color: var(--ark-gold) !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 20 — WOOCOMMERCE CART + CHECKOUT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.woocommerce-cart table.cart,
+.woocommerce-checkout form.checkout {
+    background: var(--ark-black-soft);
+    border: 1px solid var(--ark-border);
+    border-radius: var(--ark-radius-xl);
+    padding: var(--ark-space-xl);
+}
+
+.woocommerce table.shop_table th {
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ark-gold) !important;
+    border-color: var(--ark-border) !important;
+}
+
+.woocommerce table.shop_table td {
+    color: var(--ark-white) !important;
+    border-color: var(--ark-border) !important;
+}
+
+/* Form fields */
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row select,
+.woocommerce form .form-row textarea {
+    background: var(--ark-black-mid) !important;
+    border: 1px solid var(--ark-border) !important;
+    border-radius: var(--ark-radius-md) !important;
+    color: var(--ark-white) !important;
+    padding: 0.85rem 1rem !important;
+    font-size: var(--ark-size-sm) !important;
+    transition: border-color var(--ark-dur-fast) var(--ark-ease-out),
+                box-shadow var(--ark-dur-fast) var(--ark-ease-out) !important;
+}
+
+.woocommerce form .form-row input.input-text:focus,
+.woocommerce form .form-row select:focus,
+.woocommerce form .form-row textarea:focus {
+    border-color: var(--ark-gold) !important;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15) !important;
+    outline: none !important;
+}
+
+.woocommerce form .form-row label {
+    font-size: var(--ark-size-xs) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--ark-white-muted) !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 21 — FOOTER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.site-footer,
+footer.footer,
+#colophon {
+    background: var(--ark-black) !important;
+    border-top: 1px solid var(--ark-border);
+    padding: var(--ark-space-2xl) var(--ark-space-xl) var(--ark-space-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gold grid pattern background */
+.site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--ark-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--ark-border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.ark-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--ark-space-2xl);
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.ark-footer-brand__logo {
+    height: 36px;
+    margin-bottom: var(--ark-space-md);
+    filter: brightness(1.1);
+}
+
+.ark-footer-brand__tagline {
+    font-family: var(--ark-font-serif);
+    font-style: italic;
+    font-size: var(--ark-size-sm);
+    color: var(--ark-white-muted);
+    line-height: 1.6;
+    max-width: 280px;
+    margin-bottom: var(--ark-space-lg);
+}
+
+.ark-footer-col__title {
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ark-gold);
+    margin-bottom: var(--ark-space-md);
+}
+
+.ark-footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ark-space-sm);
+}
+
+.ark-footer-col ul li a {
+    font-size: var(--ark-size-sm);
+    color: var(--ark-white-muted);
+    transition: color var(--ark-dur-fast) var(--ark-ease-out),
+                padding-left var(--ark-dur-fast) var(--ark-ease-spring);
+    display: block;
+}
+
+.ark-footer-col ul li a:hover {
+    color: var(--ark-gold);
+    padding-left: 6px;
+}
+
+/* Footer bottom bar */
+.ark-footer-bottom {
+    max-width: 1200px;
+    margin: var(--ark-space-xl) auto 0;
+    padding-top: var(--ark-space-md);
+    border-top: 1px solid var(--ark-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ark-space-md);
+    position: relative;
+    z-index: 1;
+}
+
+.ark-footer-bottom__copy {
+    font-size: var(--ark-size-xs);
+    color: var(--ark-white-muted);
+    letter-spacing: 0.08em;
+}
+
+.ark-footer-social {
+    display: flex;
+    gap: var(--ark-space-sm);
+}
+
+.ark-footer-social a {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--ark-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ark-white-muted);
+    transition: border-color var(--ark-dur-fast) var(--ark-ease-out),
+                color var(--ark-dur-fast) var(--ark-ease-out),
+                transform var(--ark-dur-fast) var(--ark-ease-spring);
+}
+
+.ark-footer-social a:hover {
+    border-color: var(--ark-gold);
+    color: var(--ark-gold);
+    transform: translateY(-3px);
+}
+
+/* WordPress footer widget area */
+.site-footer .widget-area,
+.site-footer .footer-widgets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--ark-space-xl);
+    max-width: 1200px;
+    margin: 0 auto var(--ark-space-xl);
+    position: relative;
+    z-index: 1;
+}
+
+.site-footer .widget-title {
+    font-family: var(--ark-font-body) !important;
+    font-size: var(--ark-size-xs) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: var(--ark-gold) !important;
+    margin-bottom: var(--ark-space-md) !important;
+}
+
+.site-footer .widget,
+.site-footer .widget a {
+    color: var(--ark-white-muted);
+    font-size: var(--ark-size-sm);
+}
+
+.site-footer .widget a:hover {
+    color: var(--ark-gold);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 22 — SCROLL REVEAL STATES
+   (JS adds .ark-revealed when element enters viewport)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Elements that will be animated in by GSAP — start invisible */
+[data-ark-reveal],
+.ark-reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    /* will-change applied by JS just before animation, removed after — avoids always-on GPU layers */
+}
+
+[data-ark-reveal="left"] {
+    transform: translateX(-40px);
+}
+
+[data-ark-reveal="right"] {
+    transform: translateX(40px);
+}
+
+[data-ark-reveal="scale"] {
+    transform: scale(0.92);
+}
+
+[data-ark-reveal="fade"] {
+    transform: none;
+}
+
+/* JS adds this class after animation completes — prevents re-triggering */
+[data-ark-reveal].ark-revealed,
+.ark-reveal.ark-revealed {
+    opacity: 1;
+    transform: none;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 23 — HERO VIDEO BACKGROUND
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-hero-video {
+    position: absolute;
+    inset: -12%;
+    width: 116%;
+    height: 116%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.35;
+    filter: saturate(0.4) brightness(0.7);
+    will-change: transform;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 24 — FLOATING PARTICLES (injected by JS canvas)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#arkParticles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 25 — PAGE TRANSITION OVERLAY
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-transition-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-loader) - 1);
+    pointer-events: none;
+    background: var(--ark-black);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 26 — NOTIFICATION TOAST
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ark-toast {
+    position: fixed;
+    bottom: var(--ark-space-xl);
+    right: var(--ark-space-xl);
+    z-index: var(--z-modal);
+    background: var(--ark-black-soft);
+    border: 1px solid var(--ark-border);
+    border-radius: var(--ark-radius-md);
+    padding: var(--ark-space-md) var(--ark-space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--ark-space-sm);
+    font-size: var(--ark-size-sm);
+    color: var(--ark-white);
+    box-shadow: var(--ark-shadow-md);
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(12px);
+    max-width: 320px;
+}
+
+.ark-toast.ark-toast--visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.ark-toast__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ark-gold);
+    flex-shrink: 0;
+    animation: ark-toast-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ark-toast-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.7); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 27 — WOOCOMMERCE NOTICES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+    border-radius: var(--ark-radius-md) !important;
+    border-left: none !important;
+    font-size: var(--ark-size-sm) !important;
+    padding: var(--ark-space-md) var(--ark-space-lg) !important;
+    color: var(--ark-white) !important;
+}
+
+.woocommerce-message {
+    background: rgba(201,168,76,0.12) !important;
+    border: 1px solid rgba(201,168,76,0.3) !important;
+}
+
+.woocommerce-info {
+    background: rgba(36,99,235,0.12) !important;
+    border: 1px solid rgba(36,99,235,0.3) !important;
+}
+
+.woocommerce-error {
+    background: rgba(220,53,53,0.12) !important;
+    border: 1px solid rgba(220,53,53,0.3) !important;
+}
+
+.woocommerce-message::before {
+    color: var(--ark-gold) !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 28 — BREADCRUMBS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.woocommerce-breadcrumb,
+.breadcrumb,
+nav.breadcrumb {
+    font-size: var(--ark-size-xs) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--ark-white-muted) !important;
+    padding: var(--ark-space-sm) var(--ark-space-xl) !important;
+}
+
+.woocommerce-breadcrumb a {
+    color: var(--ark-white-muted) !important;
+    transition: color var(--ark-dur-fast) var(--ark-ease-out);
+}
+
+.woocommerce-breadcrumb a:hover {
+    color: var(--ark-gold) !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 29 — SEARCH
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.search-form input[type="search"],
+input.search-field {
+    background: var(--ark-black-soft) !important;
+    border: 1px solid var(--ark-border) !important;
+    border-radius: var(--ark-radius-pill) !important;
+    color: var(--ark-white) !important;
+    padding: 0.6rem 1.4rem !important;
+    font-size: var(--ark-size-sm) !important;
+    transition: border-color var(--ark-dur-fast), box-shadow var(--ark-dur-fast) !important;
+}
+
+.search-form input[type="search"]:focus {
+    border-color: var(--ark-gold) !important;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12) !important;
+    outline: none !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 30 — MISC / UTILITY
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Content padding compensation for fixed nav */
+.site-content,
+#content,
+.content-area {
+    padding-top: 80px;
+}
+
+/* Remove default WP margin-top from body (set by admin bar) */
+@media screen and (min-width: 782px) {
+    html.admin-bar .site-header,
+    html.admin-bar header#masthead {
+        top: 32px !important;
+    }
+    html.admin-bar .site-content {
+        padding-top: calc(80px + 32px);
+    }
+}
+
+@media screen and (max-width: 782px) {
+    html.admin-bar .site-header,
+    html.admin-bar header#masthead {
+        top: 46px !important;
+    }
+}
+
+/* Gold horizontal rule */
+hr {
+    border: none;
+    height: 1px;
+    background: var(--ark-border);
+    margin: var(--ark-space-xl) 0;
+}
+
+hr.ark-rule-gold {
+    background: linear-gradient(90deg, transparent, var(--ark-gold), transparent);
+}
+
+/* Block quote */
+blockquote {
+    border-left: 3px solid var(--ark-gold);
+    padding: var(--ark-space-md) var(--ark-space-lg);
+    margin: var(--ark-space-lg) 0;
+    font-family: var(--ark-font-serif);
+    font-style: italic;
+    font-size: var(--ark-size-lg);
+    color: var(--ark-white-muted);
+    background: rgba(201,168,76,0.04);
+    border-radius: 0 var(--ark-radius-md) var(--ark-radius-md) 0;
+}
+
+/* Focus ring (accessibility) */
+:focus-visible {
+    outline: 2px solid var(--ark-gold);
+    outline-offset: 3px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 31 — MOBILE RESPONSIVE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Hide custom cursor on touch devices */
+@media (hover: none), (pointer: coarse) {
+    html { cursor: auto !important; }
+    a, button, input, select, textarea { cursor: auto !important; }
+    .ark-cursor { display: none !important; }
+}
+
+@media (max-width: 1024px) {
+    .ark-split {
+        grid-template-columns: 1fr;
+        gap: var(--ark-space-xl);
+    }
+
+    .ark-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--ark-space-xl);
+    }
+
+    .woocommerce div.product {
+        grid-template-columns: 1fr !important;
+    }
+
+    .woocommerce div.product div.images {
+        position: static;
+    }
+
+    :root {
+        --ark-space-3xl: 7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-header,
+    #masthead {
+        padding: var(--ark-space-sm) var(--ark-space-md) !important;
+    }
+
+    .site-header.ark-nav-scrolled,
+    #masthead.ark-nav-scrolled {
+        padding: var(--ark-space-xs) var(--ark-space-md) !important;
+    }
+
+    .ark-section,
+    section {
+        padding: var(--ark-space-2xl) var(--ark-space-md);
+    }
+
+    .ark-footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--ark-space-xl);
+    }
+
+    .ark-footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--ark-space-md);
+    }
+
+    .woocommerce ul.products,
+    .products.columns-3,
+    .products.columns-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--ark-space-sm) !important;
+    }
+
+    .ark-stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    :root {
+        --ark-space-2xl: 4rem;
+        --ark-space-3xl: 5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .woocommerce ul.products,
+    .products.columns-3,
+    .products.columns-4 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .ark-timeline {
+        gap: var(--ark-space-lg);
+    }
+
+    .ark-timeline-step {
+        flex: 0 0 240px;
+    }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION 32 — PRINT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media print {
+    .ark-cursor,
+    .ark-loader,
+    .ark-noise,
+    .ark-marquee-section,
+    .ark-scroll-indicator {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+    }
+}
