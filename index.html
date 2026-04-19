@@ -1224,6 +1224,14 @@
 
 
         /* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+        /* Industries grid — responsive wrapper */
+        .ark-industries-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--ark-space-md);
+            margin-bottom: var(--ark-space-md);
+        }
+
         @media (max-width: 900px) {
             .ark-split { grid-template-columns: 1fr; }
             .ark-features { grid-template-columns: 1fr; gap: 1rem; }
@@ -1231,6 +1239,7 @@
             .ark-stats__grid { grid-template-columns: repeat(2,1fr); }
             .ark-footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
             .nav-links { display: none; }
+            .ark-industries-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 600px) {
@@ -1238,6 +1247,7 @@
             .ark-footer__grid { grid-template-columns: 1fr; }
             .ark-footer__bottom { flex-direction: column; text-align: center; }
             .ark-stats__grid { grid-template-columns: repeat(2,1fr); }
+            .ark-industries-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1309,7 +1319,7 @@
         </div>
 
         <!-- Gooey morphing capability text — dominant visual hook -->
-        <div class="ark-gooey-wrap" aria-live="polite" aria-label="Manufacturing capabilities">
+        <div class="ark-gooey-wrap" aria-live="polite" aria-label="Manufacturing capabilities" style="opacity:0;">
             <!-- SVG threshold filter — same feColorMatrix as the React component -->
             <svg class="ark-gooey-svg" aria-hidden="true" focusable="false">
                 <defs>
@@ -1343,7 +1353,7 @@
                 Start Your Project
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a href="#industries" class="ark-btn ark-btn--outline">See What We Make</a>
+            <a href="#industries" class="ark-btn ark-btn--outline-white">See What We Make</a>
         </div>
     </div>
 
@@ -1369,10 +1379,15 @@
         <span class="ark-marquee-item">LOW MOQ <span class="ark-marquee-dot"></span></span>
         <span class="ark-marquee-item">FULL COMPLETION <span class="ark-marquee-dot"></span></span>
         <span class="ark-marquee-item">CAPE TOWN, SA <span class="ark-marquee-dot"></span></span>
+        <!-- Exact duplicate for seamless -50% loop -->
         <span class="ark-marquee-item">SCHOOL UNIFORMS <span class="ark-marquee-dot"></span></span>
         <span class="ark-marquee-item">PRIVATE LABEL <span class="ark-marquee-dot"></span></span>
         <span class="ark-marquee-item">CORPORATE WEAR <span class="ark-marquee-dot"></span></span>
         <span class="ark-marquee-item">SPORTS KITS <span class="ark-marquee-dot"></span></span>
+        <span class="ark-marquee-item">STREETWEAR DROPS <span class="ark-marquee-dot"></span></span>
+        <span class="ark-marquee-item">LOW MOQ <span class="ark-marquee-dot"></span></span>
+        <span class="ark-marquee-item">FULL COMPLETION <span class="ark-marquee-dot"></span></span>
+        <span class="ark-marquee-item">CAPE TOWN, SA <span class="ark-marquee-dot"></span></span>
     </div>
 </div>
 
@@ -1415,7 +1430,7 @@
         </div>
 
         <!-- Industry cards grid -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ark-space-md);margin-bottom:var(--ark-space-md);">
+        <div class="ark-industries-grid">
 
             <!-- Schools & Education -->
             <div data-ark-reveal style="
@@ -1489,7 +1504,7 @@
 
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ark-space-md);">
+        <div class="ark-industries-grid">
 
             <!-- Sports & Athletics -->
             <div data-ark-reveal style="

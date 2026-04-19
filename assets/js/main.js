@@ -241,13 +241,15 @@
        ══════════════════════════════════════════════════════════════════════════ */
 
     function initHeroAnimations() {
-        document.querySelectorAll('.ark-hero__bg, .hero-bg').forEach(img => {
+        // Target the actual hero photo — .ark-hero__photo img or legacy .ark-hero__bg / .hero-bg
+        document.querySelectorAll('.ark-hero__photo img, .ark-hero__bg, .hero-bg').forEach(img => {
+            img.style.willChange = 'transform';
             gsap.to(img, {
-                yPercent: 18, ease: 'none',
+                yPercent: 14, ease: 'none',
                 scrollTrigger: {
                     trigger: img.closest('section') || img,
                     start: 'top top', end: 'bottom top',
-                    scrub: 1,
+                    scrub: 1.5,
                     fastScrollEnd: true,
                 }
             });
@@ -255,19 +257,24 @@
     }
 
     function animateHeroEntrance() {
-        const eyebrow  = document.querySelector('.ark-hero__eyebrow');
-        const lines    = document.querySelectorAll('.ark-hero__title-inner');
-        const sub      = document.querySelector('.ark-hero__sub');
-        const ctas     = document.querySelector('.ark-hero__ctas');
+        const eyebrow   = document.querySelector('.ark-hero__eyebrow');
+        const gooeyWrap = document.querySelector('.ark-gooey-wrap');
+        const lines     = document.querySelectorAll('.ark-hero__title-inner');
+        const sub       = document.querySelector('.ark-hero__sub');
+        const ctas      = document.querySelector('.ark-hero__ctas');
         const indicator = document.querySelector('.ark-scroll-indicator');
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        if (eyebrow)   tl.to(eyebrow,   { opacity: 1, y: 0,       duration: 0.55 }, 0.1);
-        if (lines.length) tl.to(lines,  { yPercent: 0,            duration: 0.8, stagger: 0.1 }, 0.2);
-        if (sub)       tl.to(sub,       { opacity: 1, y: 0,       duration: 0.65 }, 0.55);
-        if (ctas)      tl.to(ctas,      { opacity: 1, y: 0,       duration: 0.55 }, 0.7);
-        if (indicator) tl.to(indicator, { opacity: 1,             duration: 0.45 }, 1.0);
+        if (eyebrow)    tl.to(eyebrow,    { opacity: 1, y: 0,    duration: 0.55 }, 0.1);
+        // Gooey wrap fades in as the centrepiece — scale from slightly small
+        if (gooeyWrap)  tl.fromTo(gooeyWrap,
+            { opacity: 0, scale: 0.93 },
+            { opacity: 1, scale: 1,    duration: 0.9, ease: 'power2.out' }, 0.15);
+        if (lines.length) tl.to(lines,   { yPercent: 0,          duration: 0.8, stagger: 0.1 }, 0.3);
+        if (sub)        tl.to(sub,        { opacity: 1, y: 0,    duration: 0.65 }, 0.6);
+        if (ctas)       tl.to(ctas,       { opacity: 1, y: 0,    duration: 0.55 }, 0.75);
+        if (indicator)  tl.to(indicator,  { opacity: 1,          duration: 0.45 }, 1.1);
     }
 
 
@@ -670,7 +677,7 @@
         ];
 
         const MORPH_TIME    = 1;      // seconds to morph between words
-        const COOLDOWN_TIME = 0.25;   // seconds to hold a word
+        const COOLDOWN_TIME = 2.0;    // seconds to hold a word before morphing
 
         let textIndex = words.length - 1;
         let then      = performance.now();
@@ -682,13 +689,15 @@
         text2.textContent = words[(textIndex + 1) % words.length];
 
         function applyMorph(fraction) {
-            // text2 fades in
-            text2.style.filter  = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+            // Clamp away from 0 to avoid division-by-zero (blur(Infinity))
+            const f   = Math.max(fraction, 0.003);
+            const inv = Math.max(1 - fraction, 0.003);
+            // text2 fades in — cap blur at 16px (GPU budget)
+            text2.style.filter  = `blur(${Math.min(8 / f - 8, 16)}px)`;
             text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
             // text1 fades out
-            const inv           = 1 - fraction;
-            text1.style.filter  = `blur(${Math.min(8 / inv - 8, 100)}px)`;
-            text1.style.opacity = `${Math.pow(inv, 0.4) * 100}%`;
+            text1.style.filter  = `blur(${Math.min(8 / inv - 8, 16)}px)`;
+            text1.style.opacity = `${Math.pow(1 - fraction, 0.4) * 100}%`;
         }
 
         function holdWord() {
@@ -701,6 +710,7 @@
 
         function tick(now) {
             requestAnimationFrame(tick);
+            if (document.hidden) return;   // don't update while tab is backgrounded
             const dt            = (now - then) / 1000;
             then                = now;
             const wasCoolingDown = cooldown > 0;
@@ -726,6 +736,11 @@
                 holdWord();
             }
         }
+
+        // Pause the loop when tab is hidden — no GPU spend while invisible
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) then = performance.now(); // reset delta on resume
+        });
 
         requestAnimationFrame(tick);
     }
