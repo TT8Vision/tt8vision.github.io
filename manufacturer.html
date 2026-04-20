@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noah Kerchhoff — The Manufacturer | IMADETHEARK</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/design.css">
+
+    <style>
+        /* ── PAGE BASE ────────────────────────────────────────────── */
+        html, body { background: var(--ark-black); color: var(--ark-white); }
+
+        /* ── NAV ──────────────────────────────────────────────────── */
+        .site-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: var(--z-sticky);
+            padding: var(--ark-space-md) var(--ark-space-xl);
+            display: flex; align-items: center; justify-content: space-between;
+            transition: padding .45s var(--ark-ease-out),
+                        background .45s var(--ark-ease-out),
+                        transform 0.35s cubic-bezier(0.4,0,0.2,1),
+                        box-shadow .45s var(--ark-ease-out);
+        }
+        .site-header.ark-nav-scrolled {
+            padding: var(--ark-space-sm) var(--ark-space-xl);
+            background: rgba(8,8,8,0.94);
+            backdrop-filter: blur(18px) saturate(1.2);
+            border-bottom: 1px solid rgba(201,168,76,.15);
+            box-shadow: 0 1px 32px rgba(0,0,0,.4);
+        }
+        .site-header.ark-nav-hidden { transform: translateY(-100%); }
+        .nav-logo {
+            font-family: var(--ark-font-display); font-size: 1.5rem;
+            letter-spacing: .08em; color: var(--ark-white);
+            display: flex; align-items: center; gap: .3rem;
+        }
+        .nav-logo span {
+            background: linear-gradient(135deg,var(--ark-gold-dark),var(--ark-gold),var(--ark-gold-shine));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; align-items: center; gap: var(--ark-space-xl); }
+        .nav-links a {
+            font-family: var(--ark-font-body); font-size: var(--ark-size-xs);
+            font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+            color: rgba(255,255,255,.75); position: relative;
+            transition: color .22s var(--ark-ease-out);
+        }
+        .nav-links a:hover { color: var(--ark-gold); }
+        .nav-links a::after {
+            content:''; position:absolute; bottom:-3px; left:0;
+            width:0; height:1px; background:var(--ark-gold);
+            transition: width .4s var(--ark-ease-spring);
+        }
+        .nav-links a:hover::after { width:100%; }
+        @media (max-width:900px) { .nav-links { display:none; } }
+
+        /* ── HERO ─────────────────────────────────────────────────── */
+        .mfr-hero {
+            min-height: 100dvh;
+            display: flex; align-items: flex-end;
+            position: relative; overflow: hidden;
+            background: var(--ark-black);
+        }
+        .mfr-hero__bg {
+            position: absolute; inset: 0;
+        }
+        .mfr-hero__bg img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center 20%;
+            display: block;
+            filter: brightness(.28) saturate(.5);
+        }
+        .mfr-hero__gradient {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, var(--ark-black) 0%, rgba(8,8,8,.5) 50%, transparent 100%);
+        }
+        .mfr-hero__grid {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(201,168,76,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201,168,76,.025) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+        .mfr-hero__content {
+            position: relative; z-index: 3;
+            padding: calc(var(--ark-space-3xl) + 80px) var(--ark-space-xl) var(--ark-space-3xl);
+            max-width: 1100px; margin: 0 auto; width: 100%;
+        }
+        .mfr-hero__label {
+            display: inline-flex; align-items: center; gap: .8rem;
+            font-family: var(--ark-font-body); font-size: var(--ark-size-xs);
+            font-weight: 600; letter-spacing: .28em; text-transform: uppercase;
+            color: var(--ark-gold); margin-bottom: var(--ark-space-lg);
+        }
+        .mfr-hero__dot { width:5px; height:5px; border-radius:50%; background:var(--ark-gold); }
+        .mfr-hero__title {
+            font-family: var(--ark-font-display);
+            font-size: clamp(4rem, 11vw, 10rem);
+            line-height: .9; letter-spacing: .02em;
+            text-transform: uppercase; color: var(--ark-white);
+            margin-bottom: var(--ark-space-lg);
+        }
+        .mfr-hero__title .outline {
+            -webkit-text-stroke: 2px rgba(255,255,255,.25); color: transparent;
+        }
+        .mfr-hero__title .gold {
+            background: linear-gradient(135deg,var(--ark-gold-dark),var(--ark-gold),var(--ark-gold-shine));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            animation: ark-gold-breathe 3.5s ease-in-out infinite alternate;
+        }
+        .mfr-hero__sub {
+            font-family: var(--ark-font-serif); font-style: italic; font-weight: 300;
+            font-size: var(--ark-size-xl); color: rgba(255,255,255,.55);
+            max-width: 600px; line-height: 1.6; margin-bottom: var(--ark-space-xl);
+        }
+        .mfr-hero__ctas { display: flex; gap: var(--ark-space-md); flex-wrap: wrap; }
+        .mfr-hero__scroll {
+            position: absolute; right: var(--ark-space-xl); bottom: var(--ark-space-xl);
+            display: flex; flex-direction: column; align-items: center; gap: .5rem;
+            z-index: 3;
+        }
+        .mfr-hero__scroll-line {
+            width:1px; height:50px;
+            background: linear-gradient(to bottom, var(--ark-gold), transparent);
+            animation: ark-scroll-line 1.8s ease-in-out infinite;
+        }
+        .mfr-hero__scroll-text {
+            font-size:.6rem; font-weight:600; letter-spacing:.28em; text-transform:uppercase;
+            color:var(--ark-gold); writing-mode:vertical-lr; transform:rotate(180deg);
+        }
+
+        /* ── SECTION BASE ─────────────────────────────────────────── */
+        .mfr-section {
+            padding: var(--ark-space-3xl) var(--ark-space-xl);
+            position: relative;
+        }
+        .mfr-inner { max-width: 1100px; margin: 0 auto; }
+        .mfr-eyebrow {
+            display: inline-flex; align-items: center; gap: var(--ark-space-sm);
+            font-family: var(--ark-font-body); font-size: var(--ark-size-xs);
+            font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+            color: var(--ark-gold); margin-bottom: 1rem;
+        }
+        .mfr-eyebrow::before {
+            content:''; display:block; width:24px; height:1px;
+            background:var(--ark-gold); flex-shrink:0;
+        }
+        .mfr-heading {
+            font-family: var(--ark-font-display);
+            font-size: var(--ark-size-4xl); line-height: .95;
+            letter-spacing: .02em; text-transform: uppercase;
+        }
+        .mfr-heading .outline {
+            -webkit-text-stroke: 1.5px rgba(255,255,255,.22); color: transparent;
+        }
+        .mfr-heading .gold {
+            background: linear-gradient(135deg,var(--ark-gold-dark),var(--ark-gold),var(--ark-gold-shine));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .mfr-body {
+            font-size: var(--ark-size-base); line-height: 1.85;
+            color: rgba(255,255,255,.5);
+        }
+
+        /* ── GOLD RULE ───────────────────────────────────────────── */
+        .mfr-rule {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--ark-gold), transparent);
+            opacity: .35;
+        }
+
+        /* ── STORY SPLIT ──────────────────────────────────────────── */
+        .mfr-story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--ark-space-2xl);
+            align-items: center;
+        }
+        .mfr-story__visual {
+            position: relative; border-radius: var(--ark-radius-xl);
+            overflow: hidden; aspect-ratio: 4/5;
+            border: 1px solid rgba(201,168,76,.18);
+        }
+        .mfr-story__visual img {
+            width:100%; height:100%; object-fit:cover; object-position:center top; display:block;
+        }
+        .mfr-story__visual::before {
+            content:''; position:absolute; bottom:var(--ark-space-md); right:var(--ark-space-md);
+            width:40px; height:40px;
+            border-right:2px solid rgba(201,168,76,.5);
+            border-bottom:2px solid rgba(201,168,76,.5);
+            z-index:2; pointer-events:none;
+        }
+        .mfr-story__visual::after {
+            content:''; position:absolute; top:var(--ark-space-md); left:var(--ark-space-md);
+            width:40px; height:40px;
+            border-left:2px solid rgba(201,168,76,.5);
+            border-top:2px solid rgba(201,168,76,.5);
+            z-index:2; pointer-events:none;
+        }
+        .mfr-story__visual-caption {
+            position:absolute; bottom:0; left:0; right:0;
+            padding: var(--ark-space-lg) var(--ark-space-md) var(--ark-space-md);
+            background: linear-gradient(to top, rgba(8,8,8,.9) 0%, transparent 100%);
+            z-index:3;
+        }
+        .mfr-story__body {
+            display:flex; flex-direction:column; gap:var(--ark-space-lg);
+        }
+        blockquote.mfr-quote {
+            margin:0;
+            border-left: 2px solid var(--ark-gold);
+            padding-left: var(--ark-space-md);
+            font-family: var(--ark-font-serif); font-style:italic; font-weight:300;
+            font-size: var(--ark-size-xl); color: rgba(255,255,255,.8); line-height:1.65;
+        }
+
+        /* ── PROCESS STEPS ───────────────────────────────────────── */
+        .mfr-process-grid {
+            display: grid;
+            grid-template-columns: repeat(5,1fr);
+            gap: 0;
+            position: relative;
+        }
+        .mfr-step {
+            padding: var(--ark-space-xl) var(--ark-space-md) var(--ark-space-xl) 0;
+            position: relative;
+        }
+        .mfr-step::before {
+            content:''; position:absolute; top:calc(var(--ark-space-lg) + 9px); left:0;
+            width:100%; height:1px;
+            background: linear-gradient(90deg, var(--ark-gold) 0%, rgba(201,168,76,.2) 100%);
+        }
+        .mfr-step:last-child::before { width:50%; }
+        .mfr-step__dot {
+            position:absolute; top:var(--ark-space-lg); left:0;
+            width:18px; height:18px; border-radius:50%;
+            background:var(--ark-gold);
+            box-shadow: 0 0 16px rgba(201,168,76,.55);
+            transform: translateY(-50%);
+        }
+        .mfr-step__num {
+            font-family: var(--ark-font-display); font-size:var(--ark-size-3xl);
+            color: rgba(255,255,255,.07); line-height:1;
+            margin-bottom:var(--ark-space-sm); margin-top:var(--ark-space-md);
+        }
+        .mfr-step__title {
+            font-family: var(--ark-font-display); font-size:var(--ark-size-lg);
+            letter-spacing:.04em; text-transform:uppercase;
+            color:var(--ark-white); margin-bottom:var(--ark-space-sm);
+        }
+        .mfr-step__text {
+            font-size: var(--ark-size-xs); line-height:1.75;
+            color: rgba(255,255,255,.42); padding-right:var(--ark-space-md);
+        }
+
+        /* ── QUALITY SPECS ────────────────────────────────────────── */
+        .mfr-specs {
+            display: grid; grid-template-columns: repeat(3,1fr);
+            gap: var(--ark-space-md);
+        }
+        .mfr-spec-card {
+            padding: var(--ark-space-xl) var(--ark-space-lg);
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: var(--ark-radius-lg);
+            transition: border-color .4s, background .4s;
+        }
+        .mfr-spec-card:hover {
+            border-color: rgba(201,168,76,.3);
+            background: rgba(201,168,76,.04);
+        }
+        .mfr-spec-card__icon {
+            width:44px; height:44px; border-radius:var(--ark-radius-md);
+            border:1px solid rgba(201,168,76,.2);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--ark-gold); margin-bottom:var(--ark-space-md);
+            transition:border-color .3s, background .3s;
+        }
+        .mfr-spec-card:hover .mfr-spec-card__icon {
+            border-color:var(--ark-gold);
+            background:rgba(201,168,76,.08);
+        }
+        .mfr-spec-card__title {
+            font-family:var(--ark-font-display); font-size:var(--ark-size-xl);
+            letter-spacing:.04em; text-transform:uppercase;
+            color:var(--ark-white); margin-bottom:var(--ark-space-sm);
+        }
+        .mfr-spec-card__text {
+            font-size:var(--ark-size-sm); line-height:1.75;
+            color:rgba(255,255,255,.42);
+        }
+
+        /* ── PRODUCT GALLERY ──────────────────────────────────────── */
+        .mfr-gallery {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: var(--ark-space-md);
+        }
+        .mfr-gallery-card {
+            position:relative; border-radius:var(--ark-radius-lg);
+            overflow:hidden; cursor:pointer;
+            border:1px solid rgba(255,255,255,.06);
+            background:var(--ark-black-mid);
+            transition:border-color .4s, transform .4s var(--ark-ease-spring);
+        }
+        .mfr-gallery-card:hover {
+            border-color:rgba(201,168,76,.4);
+            transform:translateY(-4px);
+        }
+        .mfr-gallery-card__img {
+            aspect-ratio:3/4; overflow:hidden; position:relative;
+        }
+        .mfr-gallery-card__img img {
+            width:100%; height:100%; object-fit:cover; object-position:center top;
+            display:block;
+            transition:transform .85s var(--ark-ease-out);
+        }
+        .mfr-gallery-card:hover .mfr-gallery-card__img img {
+            transform:scale(1.06);
+        }
+        .mfr-gallery-card__info {
+            padding:var(--ark-space-md);
+        }
+        .mfr-gallery-card__name {
+            font-family:var(--ark-font-body); font-size:var(--ark-size-sm);
+            font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+            color:var(--ark-white); margin-bottom:.3rem;
+            transition:color .22s;
+        }
+        .mfr-gallery-card:hover .mfr-gallery-card__name { color:var(--ark-gold); }
+        .mfr-gallery-card__meta {
+            font-size:var(--ark-size-xs); color:rgba(255,255,255,.35);
+            margin-bottom:var(--ark-space-xs);
+        }
+        .mfr-gallery-card__price {
+            font-family:var(--ark-font-body); font-size:var(--ark-size-sm);
+            font-weight:600; color:var(--ark-gold-dark);
+        }
+        .mfr-gallery-card__badge {
+            position:absolute; top:var(--ark-space-sm); right:var(--ark-space-sm);
+            background:var(--ark-gold); color:var(--ark-black);
+            font-size:.6rem; font-weight:700; letter-spacing:.12em;
+            text-transform:uppercase; padding:.3em .7em;
+            border-radius:var(--ark-radius-sm); z-index:2;
+        }
+
+        /* ── PROOF STATS ─────────────────────────────────────────── */
+        .mfr-stats {
+            display:grid; grid-template-columns:repeat(4,1fr);
+            border:1px solid rgba(201,168,76,.15);
+            border-radius:var(--ark-radius-xl); overflow:hidden;
+        }
+        .mfr-stat {
+            padding:var(--ark-space-xl) var(--ark-space-lg);
+            text-align:center;
+            border-right:1px solid rgba(201,168,76,.1);
+        }
+        .mfr-stat:last-child { border-right:none; }
+        .mfr-stat__num {
+            font-family:var(--ark-font-display); font-size:var(--ark-size-3xl);
+            line-height:1;
+            background:linear-gradient(135deg,var(--ark-gold),var(--ark-gold-shine));
+            -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+            margin-bottom:.5rem;
+        }
+        .mfr-stat__label {
+            font-size:var(--ark-size-xs); font-weight:500;
+            letter-spacing:.15em; text-transform:uppercase;
+            color:rgba(255,255,255,.35);
+        }
+
+        /* ── CTA ──────────────────────────────────────────────────── */
+        .mfr-cta {
+            text-align:center; position:relative; overflow:hidden;
+            background:var(--ark-black-soft);
+            border:1px solid rgba(201,168,76,.15);
+            border-radius:var(--ark-radius-xl);
+            padding:var(--ark-space-3xl) var(--ark-space-xl);
+        }
+        .mfr-cta__bg {
+            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+            font-family:var(--ark-font-display);
+            font-size:clamp(5rem,18vw,14rem); letter-spacing:.05em;
+            text-transform:uppercase; color:rgba(255,255,255,.018);
+            pointer-events:none; white-space:nowrap;
+        }
+        .mfr-cta__inner { position:relative; z-index:1; max-width:680px; margin:0 auto; }
+        .mfr-cta__title {
+            font-family:var(--ark-font-display); font-size:var(--ark-size-4xl);
+            line-height:.95; letter-spacing:.03em; text-transform:uppercase;
+            color:var(--ark-white); margin-bottom:var(--ark-space-md);
+        }
+        .mfr-cta__sub {
+            font-family:var(--ark-font-serif); font-style:italic; font-weight:300;
+            font-size:var(--ark-size-lg); color:rgba(255,255,255,.45);
+            margin-bottom:var(--ark-space-xl); line-height:1.6;
+        }
+        .mfr-cta__actions {
+            display:flex; align-items:center; justify-content:center;
+            gap:var(--ark-space-md); flex-wrap:wrap;
+        }
+
+        /* ── RESPONSIVE ──────────────────────────────────────────── */
+        @media (max-width:1000px) {
+            .mfr-process-grid { grid-template-columns:1fr 1fr; gap:var(--ark-space-xl); }
+            .mfr-step::before { display:none; }
+            .mfr-step__dot { display:none; }
+            .mfr-gallery { grid-template-columns:repeat(2,1fr); }
+            .mfr-specs { grid-template-columns:1fr 1fr; }
+            .mfr-stats { grid-template-columns:1fr 1fr; }
+            .mfr-stat { border-right:none; border-bottom:1px solid rgba(201,168,76,.1); }
+            .mfr-stat:nth-child(odd) { border-right:1px solid rgba(201,168,76,.1); }
+        }
+        @media (max-width:768px) {
+            .mfr-story { grid-template-columns:1fr; }
+            .mfr-gallery { grid-template-columns:1fr 1fr; }
+            .mfr-specs { grid-template-columns:1fr; }
+            .mfr-process-grid { grid-template-columns:1fr; }
+        }
+        @media (max-width:480px) {
+            .mfr-gallery { grid-template-columns:1fr; }
+            .mfr-stats { grid-template-columns:1fr 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Noise overlay -->
+<div class="ark-noise" aria-hidden="true"></div>
+
+<!-- Custom cursor -->
+<div class="ark-cursor" id="arkCursor" aria-hidden="true">
+    <div class="ark-cursor__dot"></div>
+    <div class="ark-cursor__ring"></div>
+    <span class="ark-cursor__label"></span>
+</div>
+
+<!-- ════════ NAV ════════ -->
+<header class="site-header" id="masthead">
+    <a href="index.html" class="nav-logo" aria-label="IMADETHEARK Home">
+        IMADE<span>THE</span>ARK
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html#industries">Industries</a>
+        <a href="index.html#about">Our Story</a>
+        <a href="index.html#products">The Brand</a>
+        <a href="manufacturer.html" style="color:var(--ark-gold);">The Manufacturer</a>
+        <a href="https://cal.com/imadetheark" target="_blank" rel="noopener">Book a Call</a>
+    </nav>
+    <a href="https://cal.com/imadetheark" target="_blank" rel="noopener" class="ark-btn ark-btn--primary" style="padding:.75rem 1.6rem;">
+        Start A Project
+    </a>
+</header>
+
+
+<!-- ════════ HERO ════════ -->
+<section class="mfr-hero">
+    <div class="mfr-hero__bg">
+        <img src="assets/img/prod-zeph-outside.jpg" alt="IMADETHEARK manufacturing"
+             loading="eager" onerror="this.parentElement.style.background='#080808'">
+    </div>
+    <div class="mfr-hero__gradient"></div>
+    <div class="mfr-hero__grid" aria-hidden="true"></div>
+
+    <div class="mfr-hero__content">
+        <div class="mfr-hero__label">
+            <span class="mfr-hero__dot"></span>
+            Cape Town · Premium Apparel Manufacturing
+            <span class="mfr-hero__dot"></span>
+        </div>
+        <h1 class="mfr-hero__title">
+            THE<br>
+            <span class="outline">MANUFACTURER</span><br>
+            <span class="gold">BEHIND IT ALL.</span>
+        </h1>
+        <p class="mfr-hero__sub">
+            Noah Kerchhoff didn't start as a manufacturer. He started as a kid from Cape Flats who couldn't stop drawing clothes. Everything since then has been proof of that obsession.
+        </p>
+        <div class="mfr-hero__ctas">
+            <a href="https://cal.com/imadetheark" target="_blank" rel="noopener" class="ark-btn ark-btn--primary">
+                Book a Call With Noah
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </a>
+            <a href="#process" class="ark-btn ark-btn--outline-white">See How We Work</a>
+        </div>
+    </div>
+
+    <div class="mfr-hero__scroll" aria-hidden="true">
+        <div class="mfr-hero__scroll-line"></div>
+        <span class="mfr-hero__scroll-text">Scroll</span>
+    </div>
+</section>
+
+
+<!-- ════════ STATS STRIP ════════ -->
+<div style="background:rgba(201,168,76,.06);border-top:1px solid rgba(201,168,76,.12);border-bottom:1px solid rgba(201,168,76,.12);">
+    <div class="mfr-stats" style="border:none;border-radius:0;max-width:1100px;margin:0 auto;">
+        <div class="mfr-stat" data-ark-reveal="scale">
+            <div class="mfr-stat__num">180g</div>
+            <div class="mfr-stat__label">Premium Cotton Weight</div>
+        </div>
+        <div class="mfr-stat" data-ark-reveal="scale">
+            <div class="mfr-stat__num">Low<br>MOQ</div>
+            <div class="mfr-stat__label">Accessible Entry Point</div>
+        </div>
+        <div class="mfr-stat" data-ark-reveal="scale">
+            <div class="mfr-stat__num">5+</div>
+            <div class="mfr-stat__label">Industries Served</div>
+        </div>
+        <div class="mfr-stat" data-ark-reveal="scale">
+            <div class="mfr-stat__num">3×</div>
+            <div class="mfr-stat__label">Quality Checks Per Order</div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ════════ NOAH'S STORY ════════ -->
+<section class="mfr-section" id="story" style="background:var(--ark-black);">
+    <div class="mfr-rule" style="position:absolute;top:0;left:0;right:0;opacity:.2;"></div>
+    <div class="mfr-inner">
+        <div class="mfr-story">
+            <!-- Visual -->
+            <div class="mfr-story__visual" data-ark-reveal="left">
+                <img src="assets/img/prod-ark-tee-main.jpg"
+                     alt="Noah Kerchhoff — IMADETHEARK Founder"
+                     loading="lazy"
+                     onerror="this.src='assets/img/product-ark-tee.jpg'">
+                <div class="mfr-story__visual-caption">
+                    <div style="font-family:var(--ark-font-display);font-size:var(--ark-size-xl);letter-spacing:.06em;color:var(--ark-white);">NOAH KERCHHOFF</div>
+                    <div style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ark-gold);margin-top:.25rem;">Founder · Cape Flats, Cape Town</div>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="mfr-story__body" data-ark-reveal="right">
+                <div>
+                    <div class="mfr-eyebrow">The Origin</div>
+                    <h2 class="mfr-heading" style="color:var(--ark-white);margin-top:.75rem;">
+                        BUILT BY<br>
+                        <span class="outline">SOMEONE WHO</span><br>
+                        <span class="gold">WAS YOU.</span>
+                    </h2>
+                </div>
+
+                <blockquote class="mfr-quote">
+                    "All people were made with a uniqueness true to them — and every brand deserves garments as individual as the people wearing them."
+                </blockquote>
+
+                <p class="mfr-body">
+                    Noah grew up on the Cape Flats sketching clothes for figurines before he could afford fabric. He was a drummer. A designer. A kid with too many ideas and not enough resources. That gap — between vision and execution — is exactly what IMADETHEARK was built to close.
+                </p>
+                <p class="mfr-body">
+                    The clothing brand came first. Noah built his own label from the ground up — designing collections, sourcing fabrics, figuring out manufacturing the hard way. When schools, brands, and businesses started seeing what he'd built and asking "can you do that for us?" — the answer was already yes.
+                </p>
+                <p class="mfr-body">
+                    That's the difference when you work with IMADETHEARK. Noah isn't a factory. He's a founder who knows what it costs — financially and emotionally — to put your brand on a garment. He treats your order like it's his own label.
+                </p>
+
+                <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.07);color:var(--ark-gold);">Cape Flats Born</span>
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);">Self-Made Founder</span>
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.07);color:var(--ark-gold);">× Mobicred Partner</span>
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);">CPT → JHB</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════ MANUFACTURING PROCESS ════════ -->
+<section class="mfr-section" id="process" style="background:var(--ark-black-soft);">
+    <div class="mfr-rule" style="position:absolute;top:0;left:0;right:0;"></div>
+    <div class="mfr-inner">
+
+        <div style="text-align:center;margin-bottom:var(--ark-space-2xl);" data-ark-reveal="fade">
+            <div class="mfr-eyebrow" style="justify-content:center;">How It Works</div>
+            <h2 class="mfr-heading" style="color:var(--ark-white);margin-top:.75rem;text-align:center;">
+                FROM BRIEF<br>
+                <span class="outline">TO BRAND-READY.</span>
+            </h2>
+            <p style="font-family:var(--ark-font-serif);font-style:italic;font-size:var(--ark-size-lg);color:rgba(255,255,255,.45);max-width:520px;margin:1.5rem auto 0;line-height:1.6;">
+                Five clear steps. No guesswork. No surprises. Just your garment, done right.
+            </p>
+        </div>
+
+        <div class="mfr-process-grid" data-ark-stagger>
+
+            <div class="mfr-step" data-ark-reveal>
+                <div class="mfr-step__dot"></div>
+                <div class="mfr-step__num">01</div>
+                <div class="mfr-step__title">Share Your Vision</div>
+                <p class="mfr-step__text">Book a call. Tell Noah what you're building — silhouette, fabric weight, branding, quantity. No idea is too early or too specific. He's heard it all.</p>
+            </div>
+
+            <div class="mfr-step" data-ark-reveal>
+                <div class="mfr-step__dot"></div>
+                <div class="mfr-step__num">02</div>
+                <div class="mfr-step__title">Design & Source</div>
+                <p class="mfr-step__text">Noah sources premium fabrics — 180gsm+ carded cotton, twill, fleece, performance blends. A full tech pack is drawn up with your branding, sizing, and construction specs.</p>
+            </div>
+
+            <div class="mfr-step" data-ark-reveal>
+                <div class="mfr-step__dot"></div>
+                <div class="mfr-step__num">03</div>
+                <div class="mfr-step__title">Sample First</div>
+                <p class="mfr-step__text">Before production starts, you see and approve a sample. Fit, finish, colour — everything confirmed before a single unit goes into bulk. No surprises on delivery day.</p>
+            </div>
+
+            <div class="mfr-step" data-ark-reveal>
+                <div class="mfr-step__dot"></div>
+                <div class="mfr-step__num">04</div>
+                <div class="mfr-step__title">Precision Production</div>
+                <p class="mfr-step__text">Bulk manufacturing with the same standard as the sample. Double-stitched hems, neck tape, tubular ribbing. Every unit built to the same spec — not approximated at scale.</p>
+            </div>
+
+            <div class="mfr-step" data-ark-reveal>
+                <div class="mfr-step__dot"></div>
+                <div class="mfr-step__num">05</div>
+                <div class="mfr-step__title">Quality & Deliver</div>
+                <p class="mfr-step__text">Three quality checks before anything ships. Finished, branded, and packaged to your spec. Whether it's 50 units for a school or 500 for a drop — it leaves right.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════ QUALITY STANDARD ════════ -->
+<section class="mfr-section" style="background:var(--ark-black);">
+    <div class="mfr-rule" style="position:absolute;top:0;left:0;right:0;"></div>
+    <div class="mfr-inner">
+
+        <div style="margin-bottom:var(--ark-space-2xl);" data-ark-reveal="fade">
+            <div class="mfr-eyebrow">What Goes Into Every Garment</div>
+            <h2 class="mfr-heading" style="color:var(--ark-white);margin-top:.75rem;">
+                THE<br><span class="gold">STANDARD.</span>
+            </h2>
+        </div>
+
+        <div class="mfr-specs" data-ark-stagger>
+
+            <div class="mfr-spec-card" data-ark-reveal>
+                <div class="mfr-spec-card__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </div>
+                <div class="mfr-spec-card__title">180gsm+ Cotton</div>
+                <p class="mfr-spec-card__text">100% carded cotton at 180gsm minimum — premium weight that holds structure, resists shrinkage, and feels substantial. Not the thin stuff. The kind worth wearing.</p>
+            </div>
+
+            <div class="mfr-spec-card" data-ark-reveal>
+                <div class="mfr-spec-card__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                </div>
+                <div class="mfr-spec-card__title">Double Stitching</div>
+                <p class="mfr-spec-card__text">Double-stitched sleeves and hems throughout. Tubular knit neck ribbing with neck tape reinforcement. Built to last through daily wear, washing cycles, and school years.</p>
+            </div>
+
+            <div class="mfr-spec-card" data-ark-reveal>
+                <div class="mfr-spec-card__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
+                <div class="mfr-spec-card__title">Full Branding</div>
+                <p class="mfr-spec-card__text">Screen print, embroidery, woven labels, hangtags, heat transfer — your brand applied exactly as designed. Noah has been doing this on his own label for years. He gets it right.</p>
+            </div>
+
+            <div class="mfr-spec-card" data-ark-reveal>
+                <div class="mfr-spec-card__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="mfr-spec-card__title">3× Quality Check</div>
+                <p class="mfr-spec-card__text">Every order goes through three quality inspection points before it ships. Post-cut, post-sew, pre-pack. The same standard Noah holds his own IMADETHEARK label to.</p>
+            </div>
+
+            <div class="mfr-spec-card" data-ark-reveal>
+                <div class="mfr-spec-card__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h5l2 3v3h-7V8zM5.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
+                </div>
+                <div class="mfr-spec-card__title">Low MOQ</div>
+                <p class="mfr-spec-card__text">No need to commit to 500 units on your first order. Low minimum quantities mean you can launch a collection, test a uniform design, or start a brand without overexposing your cash flow.</p>
+            </div>
+
+            <div class="mfr-spec-card" data-ark-reveal>
+                <div class="mfr-spec-card__icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <div class="mfr-spec-card__title">Direct Access</div>
+                <p class="mfr-spec-card__text">You're not speaking to a sales rep. You're speaking to Noah. Direct, honest communication throughout the entire order. No middlemen, no lost-in-translation. The same person who designs runs production.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════ THE PROOF — ACTUAL PRODUCTS ════════ -->
+<section class="mfr-section" style="background:var(--ark-black-soft);">
+    <div class="mfr-rule" style="position:absolute;top:0;left:0;right:0;"></div>
+    <div class="mfr-inner">
+
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:var(--ark-space-md);margin-bottom:var(--ark-space-2xl);" data-ark-reveal="fade">
+            <div>
+                <div class="mfr-eyebrow">This Is What We Can Make For You</div>
+                <h2 class="mfr-heading" style="color:var(--ark-white);margin-top:.75rem;">
+                    OUR OWN<br><span class="gold">LABEL.</span>
+                </h2>
+            </div>
+            <p style="font-family:var(--ark-font-serif);font-style:italic;font-size:var(--ark-size-base);color:rgba(255,255,255,.4);max-width:400px;line-height:1.7;text-align:right;">
+                Every piece below was designed, sourced, and manufactured by Noah — in-house, to the same standard your order would receive.
+            </p>
+        </div>
+
+        <div class="mfr-gallery" data-ark-stagger>
+
+            <!-- The Ark Tee -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-ark-tee-main.jpg" alt="The Ark Tee" loading="lazy">
+                    <div class="mfr-gallery-card__badge">SIGNATURE</div>
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">The Ark Tee</div>
+                    <div class="mfr-gallery-card__meta">Boxy fit · Unisex · Black</div>
+                    <div class="mfr-gallery-card__price">R260</div>
+                </div>
+            </div>
+
+            <!-- Do It With Love -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-diwl-outside.jpg" alt="Do It With Love Tee" loading="lazy">
+                    <div class="mfr-gallery-card__badge" style="background:var(--ark-orange);">LIMITED</div>
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">Do It With Love</div>
+                    <div class="mfr-gallery-card__meta">180gsm cotton · Pink · Blue</div>
+                    <div class="mfr-gallery-card__price">R350</div>
+                </div>
+            </div>
+
+            <!-- Monstera -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-monstera-model.jpg" alt="Monstera Tee" loading="lazy">
+                    <div class="mfr-gallery-card__badge" style="background:var(--ark-blue-royal);">COLLECTION</div>
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">Monstera</div>
+                    <div class="mfr-gallery-card__meta">180gsm cotton · Black · Blue · White</div>
+                    <div class="mfr-gallery-card__price">R300</div>
+                </div>
+            </div>
+
+            <!-- Zephyranthes -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-zeph-model.jpg" alt="Zephyranthes Tee" loading="lazy">
+                    <div class="mfr-gallery-card__badge">MOTHER NATURE</div>
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">Zephyranthes</div>
+                    <div class="mfr-gallery-card__meta">180gsm cotton · Black · Blue · White</div>
+                    <div class="mfr-gallery-card__price">R300</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Second row -->
+        <div class="mfr-gallery" style="margin-top:var(--ark-space-md);" data-ark-stagger>
+
+            <!-- DIWL Pink detail -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-diwl-outside-2.jpg" alt="Do It With Love detail" loading="lazy">
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">Do It With Love — Detail</div>
+                    <div class="mfr-gallery-card__meta">Back graphic · 180gsm carded cotton</div>
+                    <div class="mfr-gallery-card__price">R350</div>
+                </div>
+            </div>
+
+            <!-- Zeph group -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-zeph-group.jpg" alt="Zephyranthes group shot" loading="lazy">
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">Zephyranthes — Full Range</div>
+                    <div class="mfr-gallery-card__meta">3 colourways · Unisex sizing</div>
+                    <div class="mfr-gallery-card__price">R300</div>
+                </div>
+            </div>
+
+            <!-- Monstera group -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-monstera-group.jpg" alt="Monstera group" loading="lazy">
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">Monstera — Range Shot</div>
+                    <div class="mfr-gallery-card__meta">White · Royal Blue · Black</div>
+                    <div class="mfr-gallery-card__price">R300</div>
+                </div>
+            </div>
+
+            <!-- Cap -->
+            <div class="mfr-gallery-card" data-ark-reveal>
+                <div class="mfr-gallery-card__img">
+                    <img src="assets/img/prod-cap-front.jpg" alt="Logo Boost Cap" loading="lazy">
+                </div>
+                <div class="mfr-gallery-card__info">
+                    <div class="mfr-gallery-card__name">Logo Boost Cap</div>
+                    <div class="mfr-gallery-card__meta">6-panel · 100% Polyester Twill</div>
+                    <div class="mfr-gallery-card__price">R150</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="text-align:center;margin-top:var(--ark-space-2xl);">
+            <a href="https://imadetheark.co.za/shop/" target="_blank" rel="noopener" class="ark-btn ark-btn--outline-white">
+                View Full Shop
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ════════ MARQUEE ════════ -->
+<div style="padding:.85rem 0;background:var(--ark-gold);overflow:hidden;white-space:nowrap;" aria-hidden="true">
+    <div style="display:inline-flex;align-items:center;animation:ark-marquee-scroll 30s linear infinite;">
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">BUILT BY HAND <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">CAPE TOWN MADE <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">180GSM PREMIUM COTTON <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">LOW MOQ <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">FOR EVERYBODY <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">3× QUALITY CHECKED <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <!-- duplicate -->
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">BUILT BY HAND <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">CAPE TOWN MADE <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">180GSM PREMIUM COTTON <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">LOW MOQ <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">FOR EVERYBODY <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+        <span style="display:inline-flex;align-items:center;gap:1.5rem;font-family:var(--ark-font-display);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ark-black);padding:0 1.5rem;">3× QUALITY CHECKED <span style="width:5px;height:5px;border-radius:50%;background:var(--ark-black);opacity:.35;flex-shrink:0;"></span></span>
+    </div>
+</div>
+
+
+<!-- ════════ FINAL CTA ════════ -->
+<section class="mfr-section" style="background:var(--ark-black);">
+    <div class="mfr-rule" style="position:absolute;top:0;left:0;right:0;"></div>
+    <div class="mfr-inner">
+        <div class="mfr-cta" data-ark-reveal="scale">
+            <div class="mfr-cta__bg" aria-hidden="true">IMADETHEARK</div>
+            <div class="mfr-cta__inner">
+                <div class="mfr-eyebrow" style="justify-content:center;margin-bottom:var(--ark-space-lg);">
+                    Cape Town · Apparel Manufacturing
+                </div>
+                <h2 class="mfr-cta__title">READY TO<br>BUILD IT?</h2>
+                <p class="mfr-cta__sub">
+                    Schools, clothing brands, corporates, clubs — if you can describe it, Noah can make it. Book a call and let's start.
+                </p>
+                <div class="mfr-cta__actions">
+                    <a href="https://cal.com/imadetheark" target="_blank" rel="noopener" class="ark-btn ark-btn--primary">
+                        Book a Call With Noah
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </a>
+                    <a href="index.html#industries" class="ark-btn ark-btn--outline-white">See All Industries</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════ FOOTER ════════ -->
+<footer style="background:var(--ark-black);border-top:1px solid rgba(201,168,76,.12);padding:var(--ark-space-xl);text-align:center;">
+    <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--ark-space-md);">
+        <a href="index.html" style="font-family:var(--ark-font-display);font-size:1.2rem;letter-spacing:.08em;color:var(--ark-white);">
+            IMADE<span style="background:linear-gradient(135deg,var(--ark-gold-dark),var(--ark-gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">THE</span>ARK
+        </a>
+        <p style="font-size:var(--ark-size-xs);color:rgba(255,255,255,.25);letter-spacing:.08em;">&copy; 2026 IMADETHEARK. Cape Town, South Africa.</p>
+        <a href="https://cal.com/imadetheark" target="_blank" rel="noopener" style="font-size:var(--ark-size-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--ark-gold);font-weight:600;">Book a Call →</a>
+    </div>
+</footer>
+
+
+<!-- ════════ SCRIPTS ════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
