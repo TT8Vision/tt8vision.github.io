@@ -8,6 +8,11 @@ automatically appear on the site. No code changes needed.
 |------|-------------|
 | `hero-bg.jpg` | Any moody Cape Town street/lifestyle shot — the man walking, outdoor shots. Displays very dark (brightness 18%) so any photo works. |
 
+## Founder Section (4:5 portrait frame, right side)
+| File | What to use |
+|------|-------------|
+| `founder.jpg` | Portrait of Noah — clean, editorial. Solo shot, ideally looking into camera. Dark or neutral background works best against the black section. |
+
 ## About Section (4:5 portrait frame, left side)
 | File | What to use |
 |------|-------------|

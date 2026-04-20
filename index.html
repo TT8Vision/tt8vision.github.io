@@ -1240,6 +1240,7 @@
             .ark-footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
             .nav-links { display: none; }
             .ark-industries-grid { grid-template-columns: 1fr 1fr; }
+            .ark-founder-grid { grid-template-columns: 1fr !important; }
         }
 
         @media (max-width: 600px) {
@@ -1618,6 +1619,137 @@
 </section>
 
 
+<!-- ════════ FOUNDER — BLACK ════════ -->
+<section id="founder" style="
+    background: var(--ark-black);
+    padding: var(--ark-space-3xl) var(--ark-space-xl);
+    position: relative;
+    overflow: hidden;
+">
+    <!-- Subtle gold grid -->
+    <div aria-hidden="true" style="
+        position:absolute;inset:0;pointer-events:none;
+        background-image:linear-gradient(rgba(201,168,76,.03) 1px,transparent 1px),
+                         linear-gradient(90deg,rgba(201,168,76,.03) 1px,transparent 1px);
+        background-size:80px 80px;
+    "></div>
+
+    <!-- Gold top rule -->
+    <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ark-gold),transparent);"></div>
+
+    <div style="max-width:1100px;margin:0 auto;position:relative;z-index:1;">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ark-space-2xl);align-items:center;" class="ark-founder-grid">
+
+            <!-- Left — story -->
+            <div data-ark-reveal="left" style="display:flex;flex-direction:column;gap:var(--ark-space-lg);">
+
+                <div>
+                    <div class="ark-eyebrow" style="color:var(--ark-gold);">The Person Behind The Brand</div>
+                    <h2 style="
+                        font-family:var(--ark-font-display);
+                        font-size:var(--ark-size-4xl);
+                        line-height:.95;
+                        letter-spacing:.02em;
+                        text-transform:uppercase;
+                        color:var(--ark-white);
+                        margin-top:.75rem;
+                    ">
+                        MEET<br>
+                        <span style="-webkit-text-stroke:1.5px rgba(255,255,255,.25);color:transparent;">NOAH</span><br>
+                        <span style="background:linear-gradient(135deg,var(--ark-gold-dark),var(--ark-gold),var(--ark-gold-shine));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">KERCHHOFF.</span>
+                    </h2>
+                </div>
+
+                <!-- Pull quote -->
+                <blockquote style="
+                    border-left:2px solid var(--ark-gold);
+                    padding-left:var(--ark-space-md);
+                    font-family:var(--ark-font-serif);
+                    font-style:italic;
+                    font-size:var(--ark-size-lg);
+                    font-weight:300;
+                    color:rgba(255,255,255,.75);
+                    line-height:1.65;
+                    margin:0;
+                ">
+                    "All people were made with a uniqueness true to them — and that's exactly why every brand we manufacture for deserves garments as individual as the people wearing them."
+                </blockquote>
+
+                <p style="font-size:var(--ark-size-sm);color:rgba(255,255,255,.5);line-height:1.85;">
+                    Noah grew up on the Cape Flats — sketching clothes for figurines before he could afford fabric. That obsession never left. IMADETHEARK started as his own label, built from scratch with his own hands, and the brand's credibility opened doors: schools, clothing startups, corporates, and collectives started coming to him not just to buy — but to build.
+                </p>
+                <p style="font-size:var(--ark-size-sm);color:rgba(255,255,255,.5);line-height:1.85;">
+                    When you book a call with IMADETHEARK, you're talking to someone who has been exactly where you are. Noah understands the risk of your first order, the pressure of a school deadline, the vision behind a brand that doesn't exist yet. That's not a pitch — it's just the truth.
+                </p>
+
+                <!-- Social proof chips -->
+                <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.07);color:var(--ark-gold);">Cape Flats Born</span>
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.45);">Self-Made Brand Founder</span>
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.07);color:var(--ark-gold);">× Mobicred Partner</span>
+                    <span style="font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.35em .9em;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.45);">CPT → JHB</span>
+                </div>
+
+                <div style="display:flex;gap:var(--ark-space-sm);flex-wrap:wrap;">
+                    <a href="https://cal.com/imadetheark" target="_blank" rel="noopener" class="ark-btn ark-btn--primary">
+                        Book a Call With Noah
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/imadetheark/" target="_blank" rel="noopener" class="ark-btn ark-btn--outline-white">
+                        Follow the Brand
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Right — founder photo -->
+            <div data-ark-reveal="right" style="
+                position:relative;
+                border-radius:var(--ark-radius-xl);
+                overflow:hidden;
+                aspect-ratio:4/5;
+                border:1px solid rgba(201,168,76,.2);
+                background:var(--ark-black-mid);
+            ">
+                <!-- Save your photo as assets/img/founder.jpg -->
+                <img src="assets/img/founder.jpg" alt="Noah Kerchhoff — IMADETHEARK Founder"
+                     loading="lazy"
+                     style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .9s var(--ark-ease-out);"
+                     onerror="this.style.display='none'">
+
+                <!-- Placeholder shown when no photo yet -->
+                <div style="
+                    position:absolute;inset:0;
+                    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--ark-space-md);
+                    background:linear-gradient(160deg,#1a1a1a 0%,#111 60%,rgba(201,168,76,.04) 100%);
+                " id="founderPlaceholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span style="font-family:var(--ark-font-body);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);">Add founder.jpg</span>
+                </div>
+
+                <!-- Gold corner brackets -->
+                <div style="position:absolute;bottom:var(--ark-space-md);right:var(--ark-space-md);width:40px;height:40px;border-right:2px solid rgba(201,168,76,.5);border-bottom:2px solid rgba(201,168,76,.5);z-index:2;pointer-events:none;"></div>
+                <div style="position:absolute;top:var(--ark-space-md);left:var(--ark-space-md);width:40px;height:40px;border-left:2px solid rgba(201,168,76,.5);border-top:2px solid rgba(201,168,76,.5);z-index:2;pointer-events:none;"></div>
+
+                <!-- Name tag overlay at bottom -->
+                <div style="
+                    position:absolute;bottom:0;left:0;right:0;
+                    padding:var(--ark-space-lg) var(--ark-space-md) var(--ark-space-md);
+                    background:linear-gradient(to top,rgba(8,8,8,.92) 0%,transparent 100%);
+                    z-index:3;
+                ">
+                    <div style="font-family:var(--ark-font-display);font-size:var(--ark-size-xl);letter-spacing:.06em;color:var(--ark-white);">NOAH KERCHHOFF</div>
+                    <div style="font-family:var(--ark-font-body);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ark-gold);margin-top:.25rem;">Founder · IMADETHEARK</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
 <!-- ════════ PROCESS — CREAM ════════ -->
 <section class="ark-process" id="process">
     <div class="ark-process__inner">
@@ -1686,7 +1818,7 @@
                 <div class="ark-eyebrow">Our Own Label — Proof of Work</div>
                 <h2 class="ark-heading" style="margin-top:.75rem;">THIS IS WHAT<br><span class="outline">WE MAKE.</span></h2>
             </div>
-            <a href="https://www.instagram.com/imadetheark/" target="_blank" rel="noopener" class="ark-btn ark-btn--outline">Shop The Brand</a>
+            <a href="#products" class="ark-btn ark-btn--outline">Shop The Brand</a>
         </div>
 
         <!-- Context line -->
