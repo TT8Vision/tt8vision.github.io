@@ -17,6 +17,13 @@
             if (!sessionStorage.getItem('ark-loaded'))
                 document.documentElement.classList.add('ark-loading');
         }());
+        // Hard failsafe: unlock page after 3s regardless of CDN/JS state
+        setTimeout(function () {
+            document.documentElement.classList.remove('ark-loading');
+            var l = document.getElementById('arkLoader');
+            if (l) { l.style.opacity = '0'; l.style.pointerEvents = 'none'; l.style.display = 'none'; }
+            if (document.body) document.body.style.overflow = '';
+        }, 3000);
     </script>
 
     <style>
