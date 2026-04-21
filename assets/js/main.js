@@ -18,9 +18,20 @@
     /* ── boot ────────────────────────────────────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', init);
 
+    // Hard safety: always unlock the page after 4s regardless of CDN state
+    setTimeout(forceUnlock, 4000);
+
+    function forceUnlock() {
+        document.documentElement.classList.remove('ark-loading');
+        var loader = document.getElementById('arkLoader');
+        if (loader) { loader.style.opacity = '0'; loader.style.pointerEvents = 'none'; loader.style.display = 'none'; }
+        document.body.style.overflow = '';
+    }
+
     function init() {
         if (typeof gsap === 'undefined') {
-            console.warn('[ARK] GSAP not loaded');
+            console.warn('[ARK] GSAP not loaded — running without animations');
+            forceUnlock();
             return;
         }
         gsap.registerPlugin(ScrollTrigger);

@@ -136,6 +136,12 @@ body {
 /* Prevent layout shift during page load */
 .ark-loading body {
     overflow: hidden;
+    /* Release scroll lock after 5.5s as CSS failsafe */
+    animation: ark-body-unlock 0.01s ease 5.5s forwards;
+}
+
+@keyframes ark-body-unlock {
+    to { overflow: auto; }
 }
 
 img, video {
@@ -309,6 +315,12 @@ ul, ol { list-style: none; }
     opacity: 1;
     visibility: visible;
     pointer-events: all;
+    /* CSS hard failsafe: auto-hide after 5s even if JS never fires */
+    animation: ark-loader-failsafe 0.3s ease 5s forwards;
+}
+
+@keyframes ark-loader-failsafe {
+    to { opacity: 0; visibility: hidden; pointer-events: none; }
 }
 
 .ark-loader__bg {
