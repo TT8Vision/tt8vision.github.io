@@ -36,9 +36,13 @@
         .nav-logo {
             font-family: var(--ark-font-display);
             font-size: clamp(1.1rem, 3.5vw, 1.5rem);
-            letter-spacing: .08em; color: var(--ark-white);
+            letter-spacing: .08em; color: rgba(255,255,255,0.28);
             display: flex; align-items: center; gap: 0;
             white-space: nowrap; flex-shrink: 0;
+            transition: color .45s ease;
+        }
+        .site-header.ark-nav-scrolled .nav-logo {
+            color: rgba(255,255,255,0.85);
         }
         .nav-logo__word { color: inherit; }
         .nav-logo__the {
