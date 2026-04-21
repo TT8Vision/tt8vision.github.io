@@ -853,7 +853,17 @@
             background: var(--ark-white-soft);
         }
 
-        .ark-testimonials__inner { max-width: 900px; margin: 0 auto; }
+        .ark-testimonials__inner { max-width: 1200px; margin: 0 auto; }
+
+        .ark-testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--ark-space-xl);
+        }
+
+        @media (max-width: 700px) {
+            .ark-testimonials-grid { grid-template-columns: 1fr; }
+        }
 
         .ark-testimonials-head {
             text-align: center;
@@ -2196,12 +2206,22 @@
             </h2>
         </div>
 
-        <div class="ark-testimonial-card" data-ark-reveal>
-            <p class="ark-testimonial-card__quote">
-                "We needed school uniforms done right — durable, well-fitted, and on a tight deadline. IMADETHEARK delivered on all three. The quality held up through the whole school year and the kids actually liked wearing them. We'll be back every year."
-            </p>
-            <div class="ark-testimonial-card__author">School Administrator</div>
-            <div class="ark-testimonial-card__company">Cape Town, South Africa</div>
+        <div class="ark-testimonials-grid">
+            <div class="ark-testimonial-card" data-ark-reveal>
+                <p class="ark-testimonial-card__quote">
+                    "We needed school uniforms done right — durable, well-fitted, and on a tight deadline. IMADETHEARK delivered on all three. The quality held up through the whole school year and the kids actually liked wearing them. We'll be back every year."
+                </p>
+                <div class="ark-testimonial-card__author">School Administrator</div>
+                <div class="ark-testimonial-card__company">Cape Town, South Africa</div>
+            </div>
+
+            <div class="ark-testimonial-card" data-ark-reveal>
+                <p class="ark-testimonial-card__quote">
+                    "St John's Pre-Preparatory School has had the pleasure of working with IMADETHEARK for the supply of specialised stationery and branded items. We have been very pleased with both the quality of the products and the competitive pricing offered. The service we received was consistently professional, efficient, and friendly. In addition, delivery was always on time, which made the process smooth and reliable. We would happily recommend IMADETHEARK to other organisations looking for a dependable supplier of stationery and branded materials."
+                </p>
+                <div class="ark-testimonial-card__author">St John's Pre-Preparatory School</div>
+                <div class="ark-testimonial-card__company">South Africa</div>
+            </div>
         </div>
     </div>
 </section>
