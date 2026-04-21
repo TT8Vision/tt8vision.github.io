@@ -40,7 +40,8 @@
             display: flex; align-items: center; gap: 0;
             white-space: nowrap; flex-shrink: 0;
         }
-        .nav-logo span {
+        .nav-logo__word { color: inherit; }
+        .nav-logo__the {
             background: linear-gradient(135deg,var(--ark-gold-dark),var(--ark-gold),var(--ark-gold-shine));
             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         }
@@ -541,7 +542,7 @@
 <!-- ════════ NAV ════════ -->
 <header class="site-header" id="masthead">
     <a href="index.html" class="nav-logo" aria-label="IMADETHEARK Home">
-        IMADE<span>THE</span>ARK
+        <span class="nav-logo__word">IMADE</span><span class="nav-logo__the">THE</span><span class="nav-logo__word">ARK</span>
     </a>
     <nav class="nav-links" aria-label="Primary navigation">
         <a href="index.html#industries">Industries</a>
