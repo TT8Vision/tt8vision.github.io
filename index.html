@@ -1237,6 +1237,28 @@
             margin-bottom: var(--ark-space-md);
         }
 
+        /* ── MANUFACTURE SECTION GRIDS ──────────────────── */
+        .ark-mfr-heading-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--ark-space-2xl);
+            align-items: end;
+            margin-bottom: var(--ark-space-2xl);
+        }
+        .ark-photo-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: var(--ark-space-2xl);
+            border-radius: var(--ark-radius-lg);
+            overflow: hidden;
+        }
+        .ark-value-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--ark-space-md);
+        }
+
         /* ── HAMBURGER BUTTON ───────────────────────────── */
         .nav-hamburger {
             display: none;
@@ -1317,8 +1339,15 @@
             .ark-industries-grid { grid-template-columns: 1fr 1fr; }
             .ark-founder-grid { grid-template-columns: 1fr !important; }
 
+            .ark-mfr-heading-grid { grid-template-columns: 1fr; gap: var(--ark-space-lg); }
+            .ark-photo-strip { grid-template-columns: repeat(2,1fr); }
+            .ark-value-cards { grid-template-columns: 1fr 1fr; }
+
             .ark-about, .ark-process, .ark-products {
                 padding: var(--ark-space-2xl) var(--ark-space-md);
+            }
+            section[id="manufacture"] {
+                padding: var(--ark-space-2xl) var(--ark-space-md) !important;
             }
             .ark-gooey-wrap { height: clamp(3.5rem, 16vw, 7rem); }
             .ark-gooey-text { font-size: clamp(3rem, 13vw, 6.5rem) !important; }
@@ -1344,8 +1373,15 @@
             .ark-stats__grid { grid-template-columns: 1fr 1fr; }
             .ark-industries-grid { grid-template-columns: 1fr; }
 
+            .ark-mfr-heading-grid { grid-template-columns: 1fr; }
+            .ark-photo-strip { grid-template-columns: repeat(2,1fr); gap: 6px; }
+            .ark-value-cards { grid-template-columns: 1fr; }
+
             .ark-about, .ark-process, .ark-products {
                 padding: var(--ark-space-xl) var(--ark-space-sm);
+            }
+            section[id="manufacture"] {
+                padding: var(--ark-space-xl) var(--ark-space-sm) !important;
             }
             section[id="founder"] {
                 padding-left: var(--ark-space-sm) !important;
@@ -2017,7 +2053,7 @@
     <div style="max-width:1200px;margin:0 auto;position:relative;z-index:1;">
 
         <!-- Heading row -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ark-space-2xl);align-items:end;margin-bottom:var(--ark-space-2xl);">
+        <div class="ark-mfr-heading-grid">
             <div>
                 <div class="ark-eyebrow" style="color:var(--ark-gold);border-color:rgba(201,168,76,.25);">Manufacturing Services</div>
                 <h2 class="ark-heading" style="margin-top:1rem;color:var(--ark-white);">
@@ -2049,7 +2085,7 @@
 
         <!-- Photo strip — 4 lifestyle/product shots -->
         <!-- Files: assets/img/lifestyle-1.jpg through lifestyle-4.jpg -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:var(--ark-space-2xl);border-radius:var(--ark-radius-lg);overflow:hidden;">
+        <div class="ark-photo-strip">
             <div style="aspect-ratio:2/3;overflow:hidden;position:relative;">
                 <img src="assets/img/lifestyle-1.jpg" alt="IMADETHEARK lifestyle" loading="lazy"
                      style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .9s;filter:brightness(.9);"
@@ -2077,7 +2113,7 @@
         </div>
 
         <!-- 3 value cards -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ark-space-md);">
+        <div class="ark-value-cards">
 
             <div data-ark-reveal style="
                 background:rgba(255,255,255,0.04);
