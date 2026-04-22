@@ -35,6 +35,17 @@
         html, body {
             background: var(--ark-white-warm);
             color: var(--ark-black);
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        img, video, svg {
+            max-width: 100%;
+            height: auto;
         }
 
         /* ── NAV ─────────────────────────────────────────────────────────────── */
@@ -1481,6 +1492,28 @@
                 padding-right: var(--ark-space-sm) !important;
             }
             .ark-products-head { flex-direction: column; align-items: flex-start; }
+
+            /* Testimonials */
+            .ark-testimonials { padding: var(--ark-space-xl) var(--ark-space-sm); }
+            .ark-testimonial-card { padding: var(--ark-space-lg) var(--ark-space-md); }
+            .ark-testimonial-card__quote { font-size: var(--ark-size-base); }
+            .ark-testimonial-card::before { font-size: 4rem; }
+
+            /* FAQ */
+            .ark-faq { padding: var(--ark-space-xl) var(--ark-space-sm); }
+            .ark-faq__question { font-size: var(--ark-size-sm); gap: var(--ark-space-sm); }
+
+            /* CTA */
+            .ark-cta { padding: var(--ark-space-2xl) var(--ark-space-sm); }
+            .ark-cta__title { font-size: clamp(2.2rem, 10vw, 4rem); }
+            .ark-cta__actions { flex-direction: column; align-items: stretch; }
+            .ark-cta__actions .ark-btn { text-align: center; justify-content: center; }
+
+            /* Footer */
+            .ark-footer { padding: var(--ark-space-xl) var(--ark-space-sm); }
+
+            /* Review bar */
+            #arkReviewBar { flex-direction: column; text-align: center; padding: 10px 12px; gap: 8px; }
         }
     </style>
 </head>

@@ -22,7 +22,9 @@
 
     <style>
         /* ── PAGE BASE ────────────────────────────────────────────── */
-        html, body { background: var(--ark-black); color: var(--ark-white); }
+        html, body { background: var(--ark-black); color: var(--ark-white); overflow-x: hidden; max-width: 100vw; }
+        *, *::before, *::after { box-sizing: border-box; }
+        img, video, svg { max-width: 100%; height: auto; }
 
         /* ── NAV ──────────────────────────────────────────────────── */
         .site-header {
