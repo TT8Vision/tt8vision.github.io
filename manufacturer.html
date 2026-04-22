@@ -199,11 +199,11 @@
         }
         .mfr-story__visual {
             position: relative; border-radius: var(--ark-radius-xl);
-            overflow: hidden; aspect-ratio: 4/5;
+            overflow: hidden; aspect-ratio: 3/4;
             border: 1px solid rgba(201,168,76,.18);
         }
         .mfr-story__visual img {
-            width:100%; height:100%; object-fit:cover; object-position:center top; display:block;
+            width:100%; height:100%; object-fit:cover; object-position:center 15%; display:block;
         }
         .mfr-story__visual::before {
             content:''; position:absolute; bottom:var(--ark-space-md); right:var(--ark-space-md);
@@ -221,8 +221,8 @@
         }
         .mfr-story__visual-caption {
             position:absolute; bottom:0; left:0; right:0;
-            padding: var(--ark-space-lg) var(--ark-space-md) var(--ark-space-md);
-            background: linear-gradient(to top, rgba(8,8,8,.9) 0%, transparent 100%);
+            padding: var(--ark-space-md);
+            background: linear-gradient(to top, rgba(8,8,8,.55) 0%, transparent 100%);
             z-index:3;
         }
         .mfr-story__body {
@@ -711,7 +711,7 @@
                 <img src="assets/img/founder.jpg"
                      alt="Noah Kerchhoff — IMADETHEARK Founder"
                      loading="lazy"
-                     style="object-position:center 30%;"
+                     style="object-position:center 15%;"
                      onerror="this.style.display='none'">
                 <div class="mfr-story__visual-caption">
                     <div style="font-family:var(--ark-font-display);font-size:var(--ark-size-xl);letter-spacing:.06em;color:var(--ark-white);">NOAH KERCHHOFF</div>
