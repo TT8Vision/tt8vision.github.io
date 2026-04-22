@@ -919,6 +919,82 @@
         }
 
 
+        /* ── FAQ ─────────────────────────────────────────────────────────────── */
+        .ark-faq {
+            padding: var(--ark-space-3xl) var(--ark-space-xl);
+            background: var(--ark-white);
+        }
+
+        .ark-faq__inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .ark-faq__head {
+            text-align: center;
+            margin-bottom: var(--ark-space-2xl);
+        }
+
+        .ark-faq__item {
+            border-bottom: 1px solid var(--ark-border);
+        }
+
+        .ark-faq__question {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--ark-space-md);
+            padding: var(--ark-space-lg) 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--ark-font-body);
+            font-size: var(--ark-size-md);
+            font-weight: 600;
+            color: var(--ark-black);
+            text-align: left;
+            letter-spacing: .02em;
+        }
+
+        .ark-faq__question:hover { color: var(--ark-gold-dark); }
+
+        .ark-faq__icon {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1.5px solid var(--ark-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .3s ease, border-color .3s ease;
+        }
+
+        .ark-faq__item.is-open .ark-faq__icon {
+            transform: rotate(45deg);
+            border-color: var(--ark-gold);
+        }
+
+        .ark-faq__answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease, padding .4s ease;
+        }
+
+        .ark-faq__item.is-open .ark-faq__answer {
+            max-height: 400px;
+        }
+
+        .ark-faq__answer p {
+            padding: 0 0 var(--ark-space-lg) 0;
+            font-family: var(--ark-font-serif);
+            font-size: var(--ark-size-base);
+            line-height: 1.7;
+            color: var(--ark-white-muted);
+        }
+
+
         /* ── CTA — BLACK BLOCK ───────────────────────────────────────────────── */
         .ark-cta {
             padding: var(--ark-space-3xl) var(--ark-space-xl);
@@ -2245,6 +2321,69 @@
 </section>
 
 
+<!-- ════════ FAQ ════════ -->
+<section class="ark-faq" id="faq">
+    <div class="ark-faq__inner">
+        <div class="ark-faq__head">
+            <div class="ark-eyebrow" style="justify-content:center;">Common Questions</div>
+            <h2 class="ark-heading" style="margin-top:.75rem;text-align:center;">
+                BEFORE YOU<br><span class="outline">ASK.</span>
+            </h2>
+        </div>
+
+        <div class="ark-faq__item" data-ark-reveal>
+            <button class="ark-faq__question" aria-expanded="false">
+                What does "Low MOQ" mean?
+                <span class="ark-faq__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="ark-faq__answer">
+                <p>MOQ stands for Minimum Order Quantity — the smallest number of units a manufacturer will produce per order. Most factories require thousands of pieces per style, making it impossible for small brands, schools, or startups to get started. At IMADETHEARK, we keep our MOQs low so you can order what you actually need — whether that's 30 school shirts or 50 branded tees — without being forced to overbuy.</p>
+            </div>
+        </div>
+
+        <div class="ark-faq__item" data-ark-reveal>
+            <button class="ark-faq__question" aria-expanded="false">
+                How long does production take?
+                <span class="ark-faq__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="ark-faq__answer">
+                <p>Timelines depend on the order size and complexity, but most orders are completed within 2–4 weeks from approval. We'll give you a clear timeline before production starts so there are no surprises.</p>
+            </div>
+        </div>
+
+        <div class="ark-faq__item" data-ark-reveal>
+            <button class="ark-faq__question" aria-expanded="false">
+                Can you manufacture more than just clothing?
+                <span class="ark-faq__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="ark-faq__answer">
+                <p>Yes. Beyond apparel we handle branded stationery, bags, caps, sports kits, corporate gifting, and custom merchandise. If it can be branded and produced, we can build it for you.</p>
+            </div>
+        </div>
+
+        <div class="ark-faq__item" data-ark-reveal>
+            <button class="ark-faq__question" aria-expanded="false">
+                Do you deliver nationwide?
+                <span class="ark-faq__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="ark-faq__answer">
+                <p>Absolutely. We deliver across South Africa — from Cape Town to Johannesburg, Durban, and everywhere in between. Delivery timelines are confirmed with every order.</p>
+            </div>
+        </div>
+
+        <div class="ark-faq__item" data-ark-reveal>
+            <button class="ark-faq__question" aria-expanded="false">
+                How do I get started?
+                <span class="ark-faq__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </button>
+            <div class="ark-faq__answer">
+                <p>Book a call with Noah. Tell us what you need — quantities, branding, fabric preferences — and we'll handle the rest. From the first conversation to the final delivery, you deal with one person who's accountable for the entire process.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <!-- ════════ CTA — BLACK ════════ -->
 <section class="ark-cta" id="contact">
     <div class="ark-cta__bg-text" aria-hidden="true">ARK</div>
@@ -2362,6 +2501,24 @@
     });
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') closeMenu();
+    });
+}());
+
+/* ── FAQ accordion ── */
+(function () {
+    document.querySelectorAll('.ark-faq__question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var item = btn.closest('.ark-faq__item');
+            var isOpen = item.classList.contains('is-open');
+            document.querySelectorAll('.ark-faq__item.is-open').forEach(function (el) {
+                el.classList.remove('is-open');
+                el.querySelector('.ark-faq__question').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) {
+                item.classList.add('is-open');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
     });
 }());
 </script>
