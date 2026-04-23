@@ -1453,6 +1453,11 @@
             section[id="manufacture"] {
                 padding: var(--ark-space-2xl) var(--ark-space-md) !important;
             }
+            section[id="industries"] {
+                padding: var(--ark-space-2xl) var(--ark-space-md) !important;
+            }
+            .ark-testimonials { padding: var(--ark-space-2xl) var(--ark-space-md); }
+            .ark-faq { padding: var(--ark-space-2xl) var(--ark-space-md); }
             .ark-gooey-wrap { height: clamp(3.5rem, 16vw, 7rem); }
             .ark-gooey-text { font-size: clamp(3rem, 13vw, 6.5rem) !important; }
             .ark-hero__sub { font-size: var(--ark-size-base); max-width: 100%; }
@@ -1509,11 +1514,26 @@
             .ark-cta__actions { flex-direction: column; align-items: stretch; }
             .ark-cta__actions .ark-btn { text-align: center; justify-content: center; }
 
+            /* Industries section (inline padding override) */
+            section[id="industries"] { padding: var(--ark-space-xl) var(--ark-space-sm) !important; }
+
+            /* Manufacturing section heading text */
+            .ark-heading { word-break: break-word; }
+
+            /* Partnership callout */
+            section[id="manufacture"] [data-ark-reveal] { padding: var(--ark-space-md) !important; }
+
+            /* Founder section name heading */
+            section[id="founder"] h2 { font-size: clamp(2rem, 9vw, 3.5rem) !important; }
+
             /* Footer */
             .ark-footer { padding: var(--ark-space-xl) var(--ark-space-sm); }
 
             /* Review bar */
             #arkReviewBar { flex-direction: column; text-align: center; padding: 10px 12px; gap: 8px; }
+
+            /* Feedback modal */
+            #arkFeedbackPanel > div { padding: 20px !important; width: 95% !important; }
         }
     </style>
 </head>
