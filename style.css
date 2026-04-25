@@ -1,0 +1,16 @@
+/*
+Theme Name:  IMADETHEARK
+Description: Child theme for Mixtas — IMADETHEARK premium manufacturer redesign.
+             Immersive white/gold/blue/black palette with full GSAP + Lenis motion.
+Template:    mixtas
+Version:     2.0.0
+Author:      IMADETHEARK
+Text Domain: imadetheark
+*/
+
+/*
+ * All design overrides live in assets/css/design.css.
+ * This file declares the child-theme relationship and imports Google Fonts.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');

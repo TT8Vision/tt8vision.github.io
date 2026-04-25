@@ -1,0 +1,16 @@
+{
+  "name": "imadetheark",
+  "version": "2.1.0",
+  "description": "IMADETHEARK — WordPress child theme (Mixtas). Premium manufacturer, white/gold/blue/black palette.",
+  "private": true,
+  "scripts": {
+    "dev":   "browser-sync start --server --files 'assets/css/*.css, assets/js/*.js, *.html' --startPath preview.html --no-notify",
+    "serve": "serve . --listen 3900 --no-clipboard",
+    "css":   "echo 'CSS: no build step needed — plain CSS loaded via CDN design system'",
+    "lint":  "echo 'Lint: no linter configured yet'"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3",
+    "serve": "^14.2.3"
+  }
+}
